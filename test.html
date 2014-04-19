@@ -1,0 +1,27 @@
+/*global beforeEach, describe, it, assert, expect  */
+(function () {
+    'use strict';
+
+    describe('SettingModel', function () {
+
+        beforeEach(function () {
+            //this.SettingModel = new pit.Models.SettingModel();
+        });
+
+        it('Check default value: ', function(){
+            var settingModel = new pit.Models.SettingModel();
+            /*var defaultValueJs = {
+                social_insurance : '8',
+                health_insurance : '1.5',
+                unemployment_insurance : '1',
+                max_range : '23000000',
+                deduction : '9000000',
+                deduction_each_dependant : '3600000'
+            };*/
+            expect(settingModel.social_insurance).to.equal(8);
+            //expect(this.SettingModel.toJson()).to.equal(defaultValueJs);
+        });
+
+    });
+})();
+

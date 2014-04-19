@@ -1,0 +1,64 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Setting</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal col-md-12" role="form" name="grossForm" action="" method="post">
+      <div class="form-group">
+        <label class="col-md-4 control-label">Social Insurance(%)</label>
+        <div class="col-md-8 input-group even-2">
+          <input class="form-control currency" id="settingSocialInsurance" name="social_insurance" type="text" value="<%= social_insurance %>" maxlength="3" title="Employee"/>
+          <input class="form-control currency" id="settingSocialInsuranceCompany" name="social_insurance_company" type="text" value="<%= social_insurance_company %>" maxlength="3" title="Company"/>
+          <span class="input-group-addon">%</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label">Health Insurance(%)</label>
+        <div class="col-md-8 input-group even-2">
+          <input class="form-control currency" id="settingHealthInsurance" name="health_insurance" type="text" value="<%= health_insurance %>" maxlength="2" title="Employee"/>
+          <input class="form-control currency" id="settingHealthInsuranceCompany" name="health_insurance_company" type="text" value="<%= health_insurance_company %>" maxlength="2" title="Company"/>
+          <span class="input-group-addon">%</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label">Unemployment Insurance(%)</label>
+        <div class="col-md-8 input-group even-2">
+          <input class="form-control currency" id="settingUnemploymentInsurance" name="unemployment_insurance" type="text" value="<%= unemployment_insurance %>" maxlength="2" title="Employee"/>
+          <input class="form-control currency" id="settingUnemploymentInsuranceCompany" name="unemployment_insurance_company" type="text" value="<%= unemployment_insurance_company %>" maxlength="2" title="Company"/>
+          <span class="input-group-addon">%</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label">Max range(SI, HI and UI) (VND)</label>
+        <div class="col-md-8 input-group">
+          <input class="form-control currency" id="settingMaxRange" name="max_range" type="text" value="<%= max_range %>"/>
+          <span class="input-group-addon">VND</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label">Min range(SI, HI and UI) (VND)</label>
+        <div class="col-md-8 input-group">
+          <input class="form-control currency" id="settingMinRange" name="min_range" type="text" value="<%= min_range %>"/>
+          <span class="input-group-addon">VND</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label">Deduction for Taxpayer (VND)</label>
+        <div class="col-md-8  input-group">
+          <input class="form-control currency" id="settingDeduction" name="deduction" type="text" value="<%= deduction %>"/>
+          <span class="input-group-addon">VND</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label">Deduction for each dependant (VND)</label>
+        <div class="col-md-8  input-group">
+          <input class="form-control currency" id="setting" name="deduction_each_dependant" type="text" value="<%= deduction_each_dependant %>"/>
+          <span class="input-group-addon">VND</span>
+        </div>
+      </div>
+      <div class="col-md-12 text-right">
+        <button type="button" class="btn btn-info action-pit-rate" data-title="Personal Incoming Tax's Rate" data-container="body" data-toggle="popover" data-placement="auto">Show PIT Rate</button>
+      </div>
+    </form>
+  </div>
+</div>

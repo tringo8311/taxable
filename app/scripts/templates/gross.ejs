@@ -1,0 +1,134 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><span class="glyphicon glyphicon-th-large"></span> Gross to Net</h3>
+  </div>
+  <div class="panel-body">
+    <div class="gross-form">
+      <form class="form-horizontal col-md-12" role="form" name="grossForm" action="" method="post">
+          <div class="form-group">
+            <label class="col-md-4 control-label">Gross Salary</label>
+            <div class="col-md-8 input-group">
+              <span class="input-group-addon">VND</span>
+              <input class="form-control currency" id="grossSalary" name="gross_salary" type="text" value="<%= gross_salary %>" maxlength="14"/>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">Taxable Salary</label>
+            <div class="col-md-8 input-group">
+              <span class="input-group-addon">VND</span>
+              <input class="form-control currency" id="grossTaxable" name="taxable_salary" type="text" value="<%= taxable_salary %>" maxlength="14"/>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">Bonus</label>
+            <div class="col-md-8 input-group">
+              <span class="input-group-addon">VND</span>
+              <input class="form-control currency" id="grossBonus" name="bonus" type="text" value="<%= bonus %>" maxlength="14"/>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">Allowances</label>
+            <div class="col-md-8 input-group">
+              <span class="input-group-addon">VND</span>
+              <input class="form-control currency" id="grossAllowances" name="allowances" type="text" value="<%= allowances %>" maxlength="10"/>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">Working days</label>
+            <div class="col-md-8 input-group">
+              <span class="input-group-addon">day(s)</span>
+              <input class="form-control numeric" id="grossWorkingDays" name="working_days" type="text" value="<%= working_days %>" maxlength="3" min="0" max="31"/>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">No Pay Leave</label>
+            <div class="col-md-8 input-group">
+              <span class="input-group-addon">day(s)</span>
+              <input class="form-control numeric" id="grossNoPayLeave" name="no_pay_leave" type="text" value="<%= no_pay_leave %>" maxlength="3" min="0" max="31"/>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">Dependants (person)</label>
+            <div class="col-md-8 input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+              <input class="form-control numeric" id="grossDependants" name="dependants" type="number" value="<%= dependants %>" maxlength="2" min="0" max="10"/>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-4 col-md-10">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="include_unemployment_insurance" class="conditional-type" value="1" <%if (include_unemployment_insurance) { %> checked="" <% } %>/>Include Unemployment Insurance
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <div class="pull-right">
+              <button id="grossCalculate" class="btn btn-success" type="submit"><span class="glyphicon glyphicon-play"></span> Calculate</button>
+            </div><div class="clearfix"></div>
+          </div>
+      </form>
+    </div>
+    <div id="grossResult" class="gross-result">
+      <div class="clearfix"></div>
+      <div class="list-group">
+        <a href="javascript:void(0)" class="list-group-item active">
+          <span>For Employee</span>
+        </a>
+        <div class="list-group-item">
+          <span>Social Insurance</span>
+          <span class="badge" id="grossSocialInsurance">0</span>
+        </div>
+        <div class="list-group-item">
+          <span>Health Insurance</span>
+          <span class="badge" id="grossHealthInsurance">0</span>
+        </div>
+        <div class="list-group-item">
+          <span>Unemployment Insurance</span>
+          <span class="badge" id="grossUnemploymentInsurance">0</span>
+        </div>
+        <div class="list-group-item">
+          <span>Total Insurance</span>
+          <span class="badge" id="grossTotalInsurance">0</span>
+        </div>
+        <div class="list-group-item">
+          <span>Salary before PIT</span>
+          <span class="badge" id="grossSalaryBeforePIT">0</span>
+        </div>
+        <div class="list-group-item clearfix">
+          <span>Personal Incoming Tax (PIT)</span>
+          <span class="badge badge-warning" id="grossPIT">0</span>
+        </div>
+        <div class="list-group-item">
+          <span>Net Salary</span>
+          <span class="badge badge-success" id="grossNetSalary">0</span>
+        </div>
+        <a href="javascript:void(0)" class="list-group-item active">
+          <span>For Company</span>
+          <span class="badge" id="grossInsuranceTotal">0</span>
+        </a>
+        <div class="list-group-item">
+          <span>Social Insurance</span>
+          <span class="badge" id="grossSocialInsuranceCompany">0</span>
+        </div>
+        <div class="list-group-item">
+          <span>Health Insurance</span>
+          <span class="badge" id="grossHealthInsuranceCompany">0</span>
+        </div>
+        <div class="list-group-item">
+          <span>Unemployment Insurance</span>
+          <span class="badge" id="grossUnemploymentInsuranceCompany">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

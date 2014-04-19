@@ -1,0 +1,209 @@
+$icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
+
+@import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/transition";
+
+body{
+  background: image-url('kal-pattern.gif', false, false) repeat scroll #CDBFE3 !important;
+}
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin: 0 auto;
+  /* Pad bottom by footer height */
+  padding: 0;
+}
+
+#wrap #main-content{
+  background: rgba(255, 255, 255, 0.5);
+  @include border-radius(8px, 8px);
+}
+#wrap .navbar-header .navbar-brand{ padding: 5px; }
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,.marketing,.footer {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+  background: $body-bg;
+  min-height: 48px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.container-narrow > hr {
+    margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+    transition: all 2s linear;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+form {
+  margin-top: 10px;
+  input[type=number],input.numeric, input.currency{
+    text-align: right;
+  }
+}
+form .radio, form .checkbox{
+  padding-left: 5px;
+}
+ 
+ul,li form {
+    margin: 0;
+    padding: 0;
+}
+ 
+ul {
+    list-style: none;
+}
+ 
+li form {
+    display: none;
+}
+form .input-group.even-2 .form-control{
+  width: 50%
+}
+ 
+.editing {
+    span {
+        display: none;
+    }
+ 
+    form {
+        display: inline-block;
+    }
+}
+#navbar-main .navbar-nav a{
+  font-size: ceil(($font-size-base * 1.1));
+}
+#navbar-main .navbar-nav a.active:before{
+  //text-shadow: 2px 1px 10px rgba(245, 52, 119, .8);
+  border-color: #E7E7E7 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+  border-image: none;
+  border-style: solid;
+  border-width: 8px;
+  content: "";
+  display: block;
+  left: 45%;
+  position: absolute;
+  top: 100%;
+}
+input:checked ~ span {
+    text-decoration: line-through;
+}
+
+.part-page .gross-form, .part-page .gross-result, .part-page .net-form, .part-page .net-result{
+  float: left;
+  margin: 1%;
+  width: 48%;
+}
+.map figure{
+  width: 98%;
+  height: 200px;
+}
+@media screen and (max-width: 640px) {
+  #wrap .navbar-header .navbar-brand{
+    padding: 5px 10px;
+  }
+  .part-page .gross-form, .part-page .gross-result, .part-page .net-form, .part-page .net-result{
+    float:none;
+    width:98%;
+  }
+  .footer{
+    .copyright {
+      text-align: center;
+    }
+  }
+}
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  #wrap {
+    #navbar-main .navbar-nav{
+      float: right;
+    }
+    #main-content{
+      padding-bottom: 60px;
+    }
+  }
+
+  .container {
+      max-width: 730px;
+    /* Remove the bottom border on the jumbotron for visual effect */
+    .jumbotron {
+      border-bottom: 0;
+    }
+  }
+  /* Remove the padding we set earlier */
+  .header,.marketing,.footer {
+      padding-left: 0;
+      padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+      margin-bottom: 30px;
+  }
+  .footer{
+    position: fixed;
+    bottom: 0;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+  }
+  .footer{
+    .copyright {
+      float: right;
+    }
+  }
+}
+@media only screen and (min-width:960px){
+    /* styles for browsers larger than 960px; */
+  .container {
+      max-width: 930px;
+  }
+}
+@media only screen and (min-width:1280px){
+    /* styles for browsers larger than 960px; */
+  .container {
+      max-width: 1080px;
+  }
+}
+@media only screen and (min-width:1440px){
+    /* styles for browsers larger than 1440px; */
+}
+@media only screen and (min-width:2000px){
+    /* for sumo sized (mac) screens */
+}

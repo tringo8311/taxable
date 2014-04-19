@@ -1,0 +1,117 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><span class="glyphicon glyphicon-th-large"></span> Extra</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal col-md-12" role="form" name="grossForm" action="" method="post">
+      <div id="extra-pitrate" class="pitRate-article">
+        <h3>Personal Incoming Tax's Rate</h3>
+        <div class="form-group">
+          <label class="col-md-2 control-label">Incoming Tax</label>
+          <div class="col-md-10 input-group">
+            <input class="form-control currency" name="salary_paid" type="text" value="<%= salary_paid %>"/>
+            <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>                       
+          </div>
+        </div>
+        <div class="pull-right">
+          <label class="">Total:</label>&nbsp;<label class="total">0</label>
+        </div><div class="clearfix"></div>
+        <div class="btn-group pull-right">
+          <a id="calculatePITRate" href="#" class="btn btn-success" role="button"><span class="glyphicon glyphicon-play"></span> Calculate</a> 
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <hr/>
+      <div id="extra-revert-pitrate" class="revertPitRate-article">
+        <h3>Revert Personal Incoming Tax's Rate</h3>
+        <div class="form-group">
+          <label class="col-md-2 control-label">Tax's Pit</label>
+          <div class="col-md-10 input-group">
+            <input class="form-control currency" name="pit_tax_paid" type="text" value="<%= pit_tax_paid %>"/>
+            <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>            
+          </div>
+        </div>
+        <div class="pull-right">
+          <label class="">Total:</label>&nbsp;<label class="total">0</label>
+        </div><div class="clearfix"></div>
+        <div class="btn-group pull-right">
+          <a id="calculateRevertPITRate" href="#" class="btn btn-success" role="button"><span class="glyphicon glyphicon-play"></span> Calculate</a>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <hr/>
+      <div id="extra-pregnant" class="pregnant-article">
+        <h3>Pregnant</h3>
+        <div class="form-group">
+          <label class="col-md-2 control-label">Gross Salary</label>
+          <div class="col-md-10 input-group">
+            <span class="input-group-addon">VND</span>
+            <input class="form-control number token-input" name="pregnant_salary_gross_average" type="text" value="<%= pregnant_salary_gross_average %>" placeholder="Input multiple values"/>            
+            <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">%</label>
+          <div class="col-md-10 input-group">
+            <span class="input-group-addon">%</span>
+            <input class="form-control currency" name="pregnant_percent" type="text" value="<%= pregnant_percent %>" placeholder="Percent"/>            
+            <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">Months</label>
+          <div class="col-md-10 input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+            <input class="form-control numeric" name="pregnant_months" type="number" value="<%= pregnant_months %>" placeholder="Months"/>            
+            <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+          </div>
+        </div>
+        <div class="pull-right">
+          <label class="">Total:</label>&nbsp;<label id="pregnantTotal" class="total">0</label>
+        </div>
+        <div class="clearfix"></div>
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-success" id="pregnantCalculate"><span class="glyphicon glyphicon-play"></span>&nbsp;Calculate</button>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <hr/>
+      <div id="extra-unemployment" class="unemployment-article">
+        <h3>Unemployment</h3>
+        <div class="form-group">
+          <label class="col-md-2 control-label">Gross Salary</label>
+          <div class="col-md-10 input-group">
+            <span class="input-group-addon">VND</span>
+            <input class="form-control number token-input" name="unemployment_salary_gross_average" type="text" value="<%= unemployment_salary_gross_average %>" placeholder="Input multiple values"/>            
+            <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">%</label>
+          <div class="col-md-10 input-group">
+            <span class="input-group-addon">%</span>
+            <input class="form-control numeric" name="unemployment_percent" type="text" value="<%= unemployment_percent %>" placeholder="Percent"/>            
+            <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">Months</label>
+          <div class="col-md-10 input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+            <input class="form-control numeric" name="unemployment_months" type="text" value="<%= unemployment_months %>" placeholder="Months"/>            
+            <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+          </div>
+        </div>
+        <div class="pull-right">
+          <label class="">Total:</label>&nbsp;<label id="pregnantTotal" class="total">0</label>
+        </div>
+        <div class="clearfix"></div>
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-success" id="unemploymentCalculate"><span class="glyphicon glyphicon-play"></span>&nbsp;Calculate</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+

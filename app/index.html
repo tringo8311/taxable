@@ -1,0 +1,186 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" manifest="manifest.appcache"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Taxable</title>
+        <meta name="keywords" content="taxable,gross,net,luong gop, luong co ban, luong hang thang, ke khai thue thu nhap, thai san, bao hiem that nghiep, bao hiem xa hoi">
+        <meta name="description" content="Ung dung Web ho tro tinh luong net, gross, ke khai thue thu nhap ca nhan, thai san, thue thu nhap, bao hiem that nghiep. Ho tro tren ca 3 nen tang Desktop, Smartphone, Tablet">
+        <meta name="author" content="<Tri Ngo> tringo8311@gmail.com">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon" sizes="72x72" href="/images/logo.png" />
+
+        <meta name="mobile-web-app-capable" content="yes">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="bower_components/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.min.css">
+        <link rel="stylesheet" href="bower_components/circliful/css/jquery.circliful.css">
+        <!-- endbuild -->
+        <script type="text/javascript">
+        window.applicationCache.addEventListener('updateready', function(){
+                window.applicationCache.swapCache();
+        }, false);
+        </script>
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
+    </head>
+    <body>
+        <!--[if lt IE 10]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="wrap">
+            <div role="navigation" class="navbar navbar-default">
+                <div class="container">
+                    <div class="navbar-header">
+                      <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      <a href="/" class="navbar-brand"><img src="images/logo.png" height="40" alt="Taxable"/> </a>
+                    </div>
+                    <div id="navbar-main" class="navbar-collapse collapse">
+                      <ul class="nav navbar-nav">
+                        <li><a href="#gross_salary" class="link-view" title="Gross to Net Salary">Gross Salary</a></li>
+                        <li><a href="#net_salary" class="link-view" title="Net to Gross Salary">Net Salary</a></li>
+                        <li><a href="#pit" class="link-view" title="Personal Incoming Tax">Personal Incoming Tax</a></li>
+                        <li><a href="#setting" class="link-view" title="Setting">Setting</a></li>
+                        <li class="dropdown">
+                          <a data-toggle="dropdown" class="dropdown-toggle" href="#">More... <b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#about" class="link-view" title="About us">About us</a></li>
+                            <li><a href="#contact" class="link-view" title="Contact us">Contact us</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#extra/pitrate" class="link-view" title="Tool calculate PIT Rate">PIT Rate</a></li>
+                            <li><a href="#extra/pregnant" class="link-view" title="Calculate Pregnant">Pregnant</a></li>
+                            <li><a href="#extra/unemployment" class="link-view" title="Calculate Unemployment">Unemployment</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">News &amp; Documents</li>
+                            <li><a href="#news" class="link-view" title="News">News</a></li>
+                            <li><a href="#news/documents" class="link-view" title="Documents">Documents</a></li>
+                            <li><a href="#news/videos" class="link-view" title="Videos">Videos</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+            <div id="main-content" class="container">
+                <div class="header">
+                    <!--h3 class="text-muted">Thuế TNCN</h3-->
+                </div>
+                <section class="jumbotron part-page">
+                    <h1>'Allo, 'Allo!</h1>
+                    <p class="lead">Welcome to Taxable App : Alpha version - build 14 Apr, 2014</p>
+                    <div id="addthis-toolbox" class="addthis_toolbox addthis_default_style addthis_32x32_style" style="display:inline-block"></div>
+                    <hr/>
+                    <div id="route-map" class="clearfix" style="display: table;margin: 0 auto;"></div>
+                </section>
+                <!-- Where our To Do app will go -->
+                <section id="todo-app" class="full-page"></section>
+                <!-- Where our gross-2-net app will go -->
+                <section id="gross-2-net-section" class="part-page"></section>
+                <!-- Where our net-2-gross app will go -->
+                <section id="net-2-gross-section" class="part-page"></section>
+                <!-- Where our setting app will go -->
+                <section id="setting-section" class="part-page"></section>
+                <!-- Where our PIT will go -->
+                <section id="pit-section" class="part-page"></section>
+                <section id="extra-section" class="part-page"></section>
+                <section id="news-section" class="full-page"></section>
+                <section id="contact-section" class="full-page"></section>
+                <section id="about-section" class="full-page"></section>
+            </div>
+            <div class="footer">
+                <div class="container">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a></li>
+                        <li><a href="#about" class="link-view" title="About us">About us</a></li>
+                        <li><a href="#contact" class="link-view" title="Contact us">Contact us</a></li>
+                    </ul>
+                    <div class="pull-right">
+                        <p class="navbar-text"><a href="javascript:void(0)" title="Go to Top" class="scroll2Top"><span class="glyphicon glyphicon-chevron-up"></span></a></p>
+                    </div>
+                    <div class="copyright">
+                        <p class="navbar-text">&copy; Copyright by @tringo8311</p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create', 'UA-49928061-1', 'nails-finder.com');ga('send','pageview');
+        </script>
+
+        <!-- build:js scripts/vendor.js -->
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/underscore/underscore.js"></script>
+        <script src="bower_components/jquery-formatcurrency/jquery.formatCurrency.js"></script>
+        <script src="bower_components/underscore.string/lib/underscore.string.js"></script>
+        <script src="bower_components/bootstrap-tokenfield/dist/bootstrap-tokenfield.min.js"></script>
+        <script src="bower_components/circliful/js/jquery.circliful.min.js"></script>
+        <script src="bower_components/backbone/backbone.js"></script>
+        <script src="bower_components/backbone-validation/dist/backbone-validation.js"></script>
+		<script src="bower_components/backbone.localStorage/backbone.localStorage.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js scripts/plugins.js -->
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/affix.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/alert.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/dropdown.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tooltip.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/modal.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/transition.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/button.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/popover.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/carousel.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/scrollspy.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/collapse.js"></script>
+        <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tab.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/main.js -->
+        <script src="scripts/main.js"></script>
+        <script src="scripts/templates.js"></script>
+
+        <script src="scripts/views/gross.js"></script>
+        <script src="scripts/collections/todos.js"></script>
+        <script src="scripts/models/todo.js"></script>
+        <script src="scripts/views/todos.js"></script>
+        <script src="scripts/views/todo.js"></script>
+        <script src="scripts/models/gross.js"></script>
+        <script src="scripts/models/setting.js"></script>
+        <script src="scripts/views/setting.js"></script>
+        <script src="scripts/models/net.js"></script>
+        <script src="scripts/views/net.js"></script>
+        <script src="scripts/models/pit.js"></script>
+        <script src="scripts/collections/pits.js"></script>
+        <script src="scripts/views/pits.js"></script>
+        <script src="scripts/views/pit.js"></script>
+        <script src="scripts/models/extra.js"></script>
+        <script src="scripts/views/extra.js"></script>
+        <script src="scripts/routes/extra.js"></script>
+        <script src="scripts/collections/news.js"></script>
+        <script src="scripts/views/news.js"></script>
+        <script src="scripts/models/contact.js"></script>
+        <script src="scripts/views/contact.js"></script>
+        <script src="scripts/views/about.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

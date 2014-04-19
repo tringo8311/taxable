@@ -1,0 +1,53 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span> Personal Income Tax</h3>
+  </div>
+  <div class="panel-body">
+    <form class="input-append" action="" method="post">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Gross Salary</th>
+                <th>Bonus</th>
+                <th>Insurance Paid</th>
+                <th>Dependants</th>
+                <th>Pit Paid</th>
+                <th>Deduction of Taxpayer</th>
+                <th>Income Paid Tax</th>
+                <th>Tax PIT</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr>
+                <td class="active">Total</td>
+                <td class="active text-right"><span id="pit-gross-total">0</span></td>
+                <td class="active text-right"><span id="pit-bonus-total">0</span></td>
+                <td class="active text-right"><span id="pit-insurance-paid-total">0</span></td>
+                <td class="active text-right"><span id="pit-dependants-total">0</span></td>
+                <td class="active text-right"><span id="pit-pit-paid-total">0</span></td>
+                <td class="active text-right"><span id="pit-deduction-of-taxpayer-total">0</span></td>
+                <td class="active text-right"><span id="pit-income-paid-tax-total">0</span></td>
+                <td class="active text-right"><span id="pit-tax-pit-total">0</span></td>
+              </tr>
+            </tfoot>
+            <!-- Where our PIT items will go -->
+        </table>
+      </div>
+      <div class="btn-group btn-group-lg btn-group-justified">
+          <a href="#" role="button" class="btn btn-default" id="pitCalculate"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;&nbsp; Calculate</a>
+          <a href="#" role="button" class="btn btn-default" id="pitExport"><span class="glyphicon glyphicon-export"></span>&nbsp;&nbsp; Export</a>
+          <a href="#" role="button" class="btn btn-default" id="pitReset"><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;&nbsp; Reset</a>
+      </div>
+      <div class="clearfix"></div>
+    </form>
+    <br/>
+    <ul class="list-group">
+      <li class="list-group-item"><label>Số thuế TNCN đã bị khấu trừ tạm nộp trong năm</label><span id="tax-pit-paid-total" class="badge">0</span></li>
+      <li class="list-group-item"><label>Số thuế TNCN quyết toán lại cuối năm</label><span id="tax-pit-total" class="badge">0</span></li>
+      <li class="list-group-item"><label>Số thuế nộp thừa / nộp thiếu</label><span id="tax-pit-result" class="badge">0</span></li>
+    </ul>
+  </div>
+</div>
