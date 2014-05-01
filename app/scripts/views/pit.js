@@ -18,12 +18,14 @@ pit.Views = pit.Views || {};
 		},
         render: function () {
 			this.$el.html(this.template(this.model.toNumberFormat()));
-            this.$el.find('input.currency').formatCurrencyLive({
-                colorize:true,
-                symbol: "",
-                decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
-                digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
-                roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
+            this.$el.find('input.currency').on("blur", function(){
+                $(this).formatCurrency({
+                    colorize:true,
+                    symbol: "",
+                    decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
+                    digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
+                    roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
+                });
             });
             this.calculate(null);
 			return this;

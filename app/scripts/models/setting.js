@@ -16,7 +16,8 @@ pit.Models = pit.Models || {};
             health_insurance : '1.5',
             unemployment_insurance : '1',
             max_range : '23000000',
-            min_range :  '1900000',
+            min_range :  '1150000',
+            min_range_area :  '2700000',
             deduction :  '9000000',
             deduction_each_dependant : '3600000',
             social_insurance_company : '18',
@@ -61,16 +62,15 @@ pit.Models = pit.Models || {};
             // 52 - 80 trieu => 30%
             // 80 trieu => 35%
             return [
-                { label : '0 - 5 000 000(VND)', min_value : '0', max_value: '5000000', rate : '5' },
-                { label : '5 000 000(VND) - 10 000 000(VND)', min_value : '5000000', max_value: '10000000', rate : '10' },
-                { label : '10 0000 000(VND) - 18 000 000(VND)', min_value : '10000000', max_value: '18000000', rate : '15' },
-                { label : '18 0000 000(VND) - 32 000 000(VND)', min_value : '18000000', max_value: '32000000', rate : '20' },
-                { label : '32 0000 000(VND) - 52 000 000(VND)', min_value : '32000000', max_value: '52000000', rate : '25' },
-                { label : '52 0000 000(VND) - 80 000 000(VND)', min_value : '52000000', max_value: '80000000', rate : '30' },
-                { label : '> 80 0000 000(VND)', min_value : '80000000', max_value: '1000000000', rate : '35' }
+                { label : '0 - 5 000 000(VND)', min_value : '0', max_value: '5000000', rate : '5', submitted : 0 },
+                { label : '5 000 000(VND) - 10 000 000(VND)', min_value : '5000000', max_value: '10000000', rate : '10', submitted : 0 },
+                { label : '10 0000 000(VND) - 18 000 000(VND)', min_value : '10000000', max_value: '18000000', rate : '15', submitted : 0 },
+                { label : '18 0000 000(VND) - 32 000 000(VND)', min_value : '18000000', max_value: '32000000', rate : '20', submitted : 0 },
+                { label : '32 0000 000(VND) - 52 000 000(VND)', min_value : '32000000', max_value: '52000000', rate : '25', submitted : 0 },
+                { label : '52 0000 000(VND) - 80 000 000(VND)', min_value : '52000000', max_value: '80000000', rate : '30', submitted : 0 },
+                { label : '> 80 0000 000(VND)', min_value : '80000000', max_value: '1000000000', rate : '35', submitted : 0 }
             ];
         },
-
         process_pit_rate: function(taxable, year){
             // Return money after pit rate
             var taxable = parseInt(taxable), result = 0, i = 0, pitRate = {}, pitRates = this.pit_rates(year),
@@ -90,7 +90,6 @@ pit.Models = pit.Models || {};
             }
             return result;
         },
-
         process_revert_pit_rate: function(taxable, year){
             // Return money before pit rate
             var taxable = parseInt(taxable), result = 0, i = 0, pitVal = 0, pitRate = {}, pitRates = this.pit_rates(year),
@@ -111,6 +110,26 @@ pit.Models = pit.Models || {};
                 i++;
             }
             return result;
+        },
+        process_pit_rate_detail: function(taxable, year){
+            // Return money after pit rate
+            var taxable = parseInt(taxable), i = 0, pitRate = {}, pitRates = this.pit_rates(year), tmpVal = 0,
+                min_value = 0, max_value = 0, actual_value = 0;
+            while ((i < pitRates.length) && (taxable > 0)){
+                pitRate = pitRates[i];
+                max_value = parseInt(pitRate.max_value);
+                min_value = parseInt(pitRate.min_value);
+                actual_value = max_value - min_value;
+                if(taxable > actual_value){
+                    tmpVal = (actual_value / 100) * pitRate.rate;
+                }else{
+                    tmpVal = (taxable / 100) * pitRate.rate;
+                }
+                pitRates[i].submitted = tmpVal;
+                taxable -= actual_value;
+                i++;
+            }
+            return pitRates;
         }
     });
 

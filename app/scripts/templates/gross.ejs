@@ -1,130 +1,131 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title"><span class="glyphicon glyphicon-th-large"></span> Gross to Net</h3>
+    <h3 class="panel-title"><span class="glyphicon glyphicon-th-large"></span> Lương Gộp (Gross) sang lương Thực lãnh (Net)</h3>
   </div>
   <div class="panel-body">
-    <div class="gross-form">
+    <div class="gross-form col-md-6 col-sm-12">
       <form class="form-horizontal col-md-12" role="form" name="grossForm" action="" method="post">
           <div class="form-group">
-            <label class="col-md-4 control-label">Gross Salary</label>
+            <label class="col-md-4 control-label">Lương gộp</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon">VND</span>
               <input class="form-control currency" id="grossSalary" name="gross_salary" type="text" value="<%= gross_salary %>" maxlength="14"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" 
+                data-placement="left" data-content="Nhập vào lương gộp. Đây là mức lương ghi trong hợp đồng lao động. Mức lương này dùng để tính bảo hiểm y tế(và bảo hiểm xã hội, bảo hiểm thất nghiệp)">?</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-4 control-label">Taxable Salary</label>
+            <label class="col-md-4 control-label">Lương chịu thuế</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon">VND</span>
               <input class="form-control currency" id="grossTaxable" name="taxable_salary" type="text" value="<%= taxable_salary %>" maxlength="14"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào lương chịu thuế - có thể để trống nếu bằng lương gộp. Đây là mức lương được trả trên thực tế.">?</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-4 control-label">Bonus</label>
+            <label class="col-md-4 control-label">Các khoản thưởng</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon">VND</span>
               <input class="form-control currency" id="grossBonus" name="bonus" type="text" value="<%= bonus %>" maxlength="14"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số tiền thưởng nếu có.">?</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-4 control-label">Allowances</label>
+            <label class="col-md-4 control-label">Các khoản trợ cấp</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon">VND</span>
               <input class="form-control currency" id="grossAllowances" name="allowances" type="text" value="<%= allowances %>" maxlength="10"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số tiền phụ cấp nếu có.">?</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-4 control-label">Working days</label>
+            <label class="col-md-4 control-label">Số ngày làm việc</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon">day(s)</span>
               <input class="form-control numeric" id="grossWorkingDays" name="working_days" type="text" value="<%= working_days %>" maxlength="3" min="0" max="31"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào tổng số ngày làm việc trong tháng.">?</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-4 control-label">No Pay Leave</label>
+            <label class="col-md-4 control-label">Nghỉ việc không lương</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon">day(s)</span>
               <input class="form-control numeric" id="grossNoPayLeave" name="no_pay_leave" type="text" value="<%= no_pay_leave %>" maxlength="3" min="0" max="31"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số ngày nghỉ mà không được nhận lương.">?</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-4 control-label">Dependants (person)</label>
+            <label class="col-md-4 control-label">Số Người phụ thuộc</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
               <input class="form-control numeric" id="grossDependants" name="dependants" type="number" value="<%= dependants %>" maxlength="2" min="0" max="10"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số lượng người phụ thuộc nếu có.">?</span>
             </div>
           </div>
           <div class="form-group">
             <div class="col-md-offset-4 col-md-10">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="include_unemployment_insurance" class="conditional-type" value="1" <%if (include_unemployment_insurance) { %> checked="" <% } %>/>Include Unemployment Insurance
+                  <input type="checkbox" name="include_unemployment_insurance" class="conditional-type" value="1" <%if (include_unemployment_insurance) { %> checked="" <% } %>/>Có Bảo hiểm Thất nghiệp (BHTN)
                 </label>
               </div>
             </div>
           </div>
           <div class="form-actions">
             <div class="pull-right">
-              <button id="grossCalculate" class="btn btn-success" type="submit"><span class="glyphicon glyphicon-play"></span> Calculate</button>
+              <button id="grossCalculate" class="btn btn-success" type="submit"><span class="glyphicon glyphicon-play"></span> Tính toán</button>
             </div><div class="clearfix"></div>
           </div>
       </form>
     </div>
-    <div id="grossResult" class="gross-result">
+    <div id="grossResult" class="gross-result col-md-6 col-sm-12">
       <div class="clearfix"></div>
       <div class="list-group">
         <a href="javascript:void(0)" class="list-group-item active">
-          <span>For Employee</span>
+          <span>Người lao động</span>
         </a>
         <div class="list-group-item">
-          <span>Social Insurance</span>
+          <span>Bảo hiểm Xã hội</span> (<span id="grossSocialInsuranceRate"></span>)
           <span class="badge" id="grossSocialInsurance">0</span>
         </div>
         <div class="list-group-item">
-          <span>Health Insurance</span>
+          <span>Bảo hiểm Y tế</span> (<span id="grossHealthInsuranceRate"></span>)
           <span class="badge" id="grossHealthInsurance">0</span>
         </div>
         <div class="list-group-item">
-          <span>Unemployment Insurance</span>
+          <span>Bảo hiểm thất nghiệp</span> (<span id="grossUnemploymentInsuranceRate"></span>)
           <span class="badge" id="grossUnemploymentInsurance">0</span>
         </div>
-        <div class="list-group-item">
-          <span>Total Insurance</span>
+        <div class="list-group-item clearfix">
+          <span>Tổng cộng Bảo hiểm</span>
           <span class="badge" id="grossTotalInsurance">0</span>
         </div>
         <div class="list-group-item">
-          <span>Salary before PIT</span>
+          <span>Lương trước thuế</span>
           <span class="badge" id="grossSalaryBeforePIT">0</span>
         </div>
         <div class="list-group-item clearfix">
-          <span>Personal Incoming Tax (PIT)</span>
+          <span>Thuế TNCN</span>
           <span class="badge badge-warning" id="grossPIT">0</span>
         </div>
         <div class="list-group-item">
-          <span>Net Salary</span>
+          <span>Lương thực lãnh</span>
           <span class="badge badge-success" id="grossNetSalary">0</span>
         </div>
         <a href="javascript:void(0)" class="list-group-item active">
-          <span>For Company</span>
+          <span>Doanh nghiệp</span>
           <span class="badge" id="grossInsuranceTotal">0</span>
         </a>
         <div class="list-group-item">
-          <span>Social Insurance</span>
+          <span>Bảo hiểm Xã hội</span> (<span id="grossSocialInsuranceRateCompany"></span>)
           <span class="badge" id="grossSocialInsuranceCompany">0</span>
         </div>
-        <div class="list-group-item">
-          <span>Health Insurance</span>
+        <div class="list-group-item"> 
+          <span>Bảo hiểm Y tế</span> (<span id="grossHealthInsuranceRateCompany"></span>)
           <span class="badge" id="grossHealthInsuranceCompany">0</span>
         </div>
         <div class="list-group-item">
-          <span>Unemployment Insurance</span>
+          <span>Bảo hiểm thất nghiệp</span> (<span id="grossUnemploymentInsuranceRateCompany"></span>)
           <span class="badge" id="grossUnemploymentInsuranceCompany">0</span>
         </div>
       </div>

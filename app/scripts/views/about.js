@@ -39,7 +39,7 @@ pit.Views = pit.Views || {};
     pit.Views.AboutView = Backbone.View.extend({
 
         template: JST['app/scripts/templates/about.ejs'],
-         initialize: function(){
+        initialize: function(){
             //if you put this code inside a view, the view will now listening to its model change event
             this.model = {};
             this.render();

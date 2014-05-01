@@ -30,7 +30,10 @@ module.exports = function (grunt) {
             generate: {
                 options: {
                     basePath: '../',
-                    cache: ['scripts/vendor/modernizr.js', 'scripts/vendor.js', 'scripts/plugins.js', 'scripts/main.js', 'styles/main.css', 'index.html'],
+                    cache: ['scripts/vendor/modernizr.js', 'scripts/vendor.js',
+                        'scripts/plugins.js', 'scripts/main.js', 'styles/main.css',
+                        'images/logo.png', 'images/slideshow1.jpg', 'images/slideshow2.jpg', 'images/slideshow3.jpg',
+                        'index.html'],
                     network: ['http://*', 'https://*'],
                     fallback: ['/ /offline.html'],
                     exclude: ['js/jquery.min.js'],
@@ -201,7 +204,8 @@ module.exports = function (grunt) {
             },
             server: {
                 options: {
-                    debugInfo: true
+                    debugInfo: true,
+                    imagesDir: 'images'
                 }
             }
         },
@@ -279,7 +283,9 @@ module.exports = function (grunt) {
                         '.htaccess',
                         'images/{,*/}*.{webp,png,gif}',
                         'styles/fonts/{,*/}*.*',
-                        'bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/*.*'
+                        'bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/*.*',
+                        'PHPMailer/*.*',
+                        'contact_us.php'
                     ]
                 }]
             }

@@ -19,6 +19,7 @@ pit.Models = pit.Models || {};
             fullname: '',
             email: '',
             phone: '',
+            subject: '',
             message: ''
         },
         validation: {
@@ -35,10 +36,14 @@ pit.Models = pit.Models || {};
             }],
             phone: [
                 {
-                    pattern: /\s*(\d{3})-(\d{3})-(\d{4})\s*/g,
+                    pattern: /\s*((\d{3})-(\d{3})-(\d{4}))|\d{9,10}\s*/g,
                     msg: 'Phone provided is not correct'
                 }
             ],
+            subject: {
+                required: true,
+                msg: 'Please provide your subject'
+            },
             message: {
                 required: true,
                 msg: 'Please provide your message'

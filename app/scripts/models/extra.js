@@ -19,6 +19,7 @@ pit.Models = pit.Models || {};
             pregnant_salary_gross_average : null,
             pregnant_percent : 100,
             pregnant_months : 6,
+            pregnant_subsidy : 1150000*2,
             unemployment_salary_gross_average : null,
             unemployment_percent : 70,
             unemployment_months : 6

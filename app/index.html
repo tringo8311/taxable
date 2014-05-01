@@ -6,28 +6,31 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Taxable</title>
-        <meta name="keywords" content="taxable,gross,net,luong gop, luong co ban, luong hang thang, ke khai thue thu nhap, thai san, bao hiem that nghiep, bao hiem xa hoi">
-        <meta name="description" content="Ung dung Web ho tro tinh luong net, gross, ke khai thue thu nhap ca nhan, thai san, thue thu nhap, bao hiem that nghiep. Ho tro tren ca 3 nen tang Desktop, Smartphone, Tablet">
+        <title>Tính lương Gross Net (Beta version)</title>
+        <meta name="keywords" content="Tinh luong net, tinh luong gross, Taxable, gross, net, luong gop, luong co ban, luong hang thang, ke khai thue thu nhap, che do thai san, bao hiem that nghiep, bao hiem xa hoi, ung dung tinh luong, incoming tax">
+        <meta name="description" content="Cong cu tinh luong net, gross, ke khai thue thu nhap ca nhan, thai san, thue thu nhap, bao hiem that nghiep. Ho tro tren ca 3 nen tang Desktop, Smartphone, Tablet">
         <meta name="author" content="<Tri Ngo> tringo8311@gmail.com">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
-
+		<meta name="robots" content="index,follow" />
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <link rel="apple-touch-icon" sizes="72x72" href="/images/logo.png" />
-
+        <link rel="apple-touch-icon" sizes="72x72" href="/images/logo_apple.png" />
         <meta name="mobile-web-app-capable" content="yes">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="bower_components/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.min.css">
-        <link rel="stylesheet" href="bower_components/circliful/css/jquery.circliful.css">
+        <!--link rel="stylesheet" href="bower_components/circliful/css/jquery.circliful.css"-->
         <!-- endbuild -->
         <script type="text/javascript">
-        window.applicationCache.addEventListener('updateready', function(){
-                window.applicationCache.swapCache();
-        }, false);
+            function onUpdateReady() {
+                if(window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+                    window.applicationCache.swapCache();
+                    location.reload();
+                }
+            }
+            window.applicationCache.addEventListener('updateready', onUpdateReady);
         </script>
         <!-- build:js scripts/vendor/modernizr.js -->
         <script src="bower_components/modernizr/modernizr.js"></script>
@@ -38,56 +41,131 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div id="wrap">
-            <div role="navigation" class="navbar navbar-default">
-                <div class="container">
-                    <div class="navbar-header">
-                      <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                      </button>
-                      <a href="/" class="navbar-brand"><img src="images/logo.png" height="40" alt="Taxable"/> </a>
-                    </div>
-                    <div id="navbar-main" class="navbar-collapse collapse">
-                      <ul class="nav navbar-nav">
-                        <li><a href="#gross_salary" class="link-view" title="Gross to Net Salary">Gross Salary</a></li>
-                        <li><a href="#net_salary" class="link-view" title="Net to Gross Salary">Net Salary</a></li>
-                        <li><a href="#pit" class="link-view" title="Personal Incoming Tax">Personal Incoming Tax</a></li>
-                        <li><a href="#setting" class="link-view" title="Setting">Setting</a></li>
-                        <li class="dropdown">
-                          <a data-toggle="dropdown" class="dropdown-toggle" href="#">More... <b class="caret"></b></a>
-                          <ul class="dropdown-menu">
-                            <li><a href="#about" class="link-view" title="About us">About us</a></li>
-                            <li><a href="#contact" class="link-view" title="Contact us">Contact us</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#extra/pitrate" class="link-view" title="Tool calculate PIT Rate">PIT Rate</a></li>
-                            <li><a href="#extra/pregnant" class="link-view" title="Calculate Pregnant">Pregnant</a></li>
-                            <li><a href="#extra/unemployment" class="link-view" title="Calculate Unemployment">Unemployment</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header">News &amp; Documents</li>
-                            <li><a href="#news" class="link-view" title="News">News</a></li>
-                            <li><a href="#news/documents" class="link-view" title="Documents">Documents</a></li>
-                            <li><a href="#news/videos" class="link-view" title="Videos">Videos</a></li>
+            <div id="heading" role="navigation" class="navbar navbar-default">
+                <div class="navbar-header">
+                  <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a href="/" class="navbar-brand"><img src="images/logo.png" alt="Taxable"/> </a>
+                </div>
+                <div id="navbar-main" class="nav-wrapper">
+                    <div class="container">
+                        <div class="navbar-collapse collapse">
+                          <ul class="nav nav-justified">
+                            <li><a href="#gross_salary" class="link-view" title="Chuyển từ Lương Gross sang Net">Lương Gross</a></li>
+                            <li><a href="#net_salary" class="link-view" title="Chuyển từ Lương Net sang Gross"> Lương Net</a></li>
+                            <li><a href="#pit" class="link-view" title="Personal Incoming Tax">Quyết toán Thuế</a></li>
+                            <li><a href="#setting" class="link-view" title="Setting">Cài đặt</a></li>
+                            <li class="dropdown">
+                              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Khác... <b class="caret"></b></a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#about" class="link-view" title="About us">Về chúng tôi</a></li>
+                                <li><a href="#contact" class="link-view" title="Contact us">Liên hệ</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#extra/pitrate" class="link-view" title="Tool calculate PIT Rate">Tính thuế TNCN</a></li>
+                                <li><a href="#extra/pregnant" class="link-view" title="Calculate Pregnant">Chế độ Thai sản</a></li>
+                                <li><a href="#extra/unemployment" class="link-view" title="Calculate Unemployment">Bảo hiểm Thất nghiệp</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Tin tức &amp; Tài liệu</li>
+                                <li><a href="#news" class="link-view" title="News">Tin tức</a></li>
+                                <li><a href="#news/documents" class="link-view" title="Documents">Tài liệu</a></li>
+                                <li><a href="#news/videos" class="link-view" title="Videos">Videos</a></li>
+                              </ul>
+                            </li>
                           </ul>
-                        </li>
-                      </ul>
+                        </div>
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
             <div id="main-content" class="container">
-                <div class="header">
-                    <!--h3 class="text-muted">Thuế TNCN</h3-->
-                </div>
-                <section class="jumbotron part-page">
-                    <h1>Gross, Net, Personal Incoming Tax,...</h1>
-                    <p class="lead">Chào mừng các bạn đến với Ứng dụng Taxable: Alpha version - build 14 Apr, 2014</p>
-                    <div id="addthis-toolbox" class="addthis_toolbox addthis_default_style addthis_32x32_style" style="display:inline-block"></div>
+                <section class="part-page">
+                    <div id="carousel-taxable-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+                      <!-- Indicators -->
+                      <ol class="carousel-indicators">
+                        <li data-target="#carousel-taxable-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-taxable-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-taxable-generic" data-slide-to="2"></li>
+                      </ol>
+                      <!-- Wrapper for slides -->
+                      <div class="carousel-inner">
+                        <div class="item active">
+                          <img src="images/slideshow1.jpg" alt="Slide 1">
+                          <div class="carousel-caption">
+                            <h3>Chào mừng các bạn đến với <span style="color: #1F5A6A">Tax</span><span style="color:#D84C2C">able</span></h3>
+                            <p class="lead">Beta version - build 23 May, 2014</p>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <img src="images/slideshow2.jpg" alt="Slide 2">
+                          <div class="carousel-caption">
+                              <h3>Tiên lợi - Nhanh chóng - Chính xác</h3>
+                              <div class="row">
+                                  <div class="col-md-4"><p class="lead"><span class="glyphicon glyphicon-ok"></span> Tính Lương Gross</p></div>
+                                  <div class="col-md-4"><p class="lead"><span class="glyphicon glyphicon-ok"></span> Tính Lương Net</p></div>
+                                  <div class="col-md-4"><p class="lead"><span class="glyphicon glyphicon-ok"></span> Tính Thuế TNCN</p></div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12"><p class="lead"><span class="glyphicon glyphicon-ok"></span> Và các chế độ xã hội cho Người lao động.</p></div>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <img src="images/slideshow3.jpg" alt="Slide 3">
+                          <div class="carousel-caption">
+                            <p class="lead">Mọi ý kiến đóng góp xin vui lòng gửi email đến hộp thư <a href="mailto:tringo8311@gmail.com">tringo8311@gmail.com</a></p>
+                            <div id="addthis-toolbox" class="addthis_toolbox addthis_default_style addthis_32x32_style" style="display:inline-block"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Controls -->
+                      <a class="left carousel-control" href="#carousel-taxable-generic" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                      </a>
+                      <a class="right carousel-control" href="#carousel-taxable-generic" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                      </a>
+                    </div>
+                    <!--div id="route-map" class="clearfix" style="display: table;margin: 0 auto;"></div-->
                     <hr/>
-                    <div id="route-map" class="clearfix" style="display: table;margin: 0 auto;"></div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="carbonad">
+                                <h3>
+                                    <strong>Tính Lương Gross</strong>
+                                </h3>
+                                <div class="carbonad-text">
+                                    <p>Chuyển từ Lương Gross sang Lương Net</p>
+                                    <p>Lương Net = <span class="label label-success">(Lương Gross + Tiền thưởng + Trợ cấp)</span> - <span class="label label-warning">(%BHXH + %BHYT + %BHTN)</span></p>
+                                </div>
+                            </div>
+                            <div class="carbonad">
+                                <h3><strong>Tính Lương Net</strong></h3>
+                                <div class="carbonad-text">
+                                    <p>Chuyển từ Lương Net sang Lương Gross</p>
+                                    <p>Lương Gross = <span class="label label-success">(Lương Net + Tiền thưởng + Trợ cấp)</span> + <span class="label label-warning">(%BHXH + %BHYT + %BHTN)</span></p>
+                                </div>
+                            </div>
+                            <div class="carbonad">
+                                <h3><strong>Tính Thuế TNCN</strong></h3>
+                                <div class="carbonad-text">
+                                    <blockquote>Bạn gặp khó khăn khi quyết toán thuế cuối năm?</blockquote>
+                                    <p>Hãy sử dụng Ứng dụng của chúng tôi để giải quyết vấn đề của bạn nhanh chóng và chính xác.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="carbonad" style="max-height: 485px;overflow: auto;">
+                                <div id="disqus_thread"></div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
                 </section>
                 <!-- Where our To Do app will go -->
-                <section id="todo-app" class="full-page"></section>
+                <section id="todo-app" class="full-page">&nbsp;</section>
                 <!-- Where our gross-2-net app will go -->
                 <section id="gross-2-net-section" class="part-page"></section>
                 <!-- Where our net-2-gross app will go -->
@@ -104,18 +182,16 @@
             <div class="footer">
                 <div class="container">
                     <ul class="nav navbar-nav">
-                        <li><a href="/"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a></li>
-                        <li><a href="#about" class="link-view" title="About us">About us</a></li>
-                        <li><a href="#contact" class="link-view" title="Contact us">Contact us</a></li>
+                        <li><a href="/"><span class="glyphicon glyphicon-home"></span>&nbsp;Trang chủ</a></li>
+                        <li><a href="#about" class="link-view" title="About us"><span class="glyphicon glyphicon-exclamation-sign"></span> Về chúng tôi</a></li>
+                        <li><a href="#contact" class="link-view" title="Contact us"><span class="glyphicon glyphicon-hand-right"></span> Liên hệ</a></li>
                     </ul>
-                    <div class="pull-right">
-                        <p class="navbar-text"><a href="javascript:void(0)" title="Go to Top" class="scroll2Top"><span class="glyphicon glyphicon-chevron-up"></span></a></p>
-                    </div>
                     <div class="copyright">
                         <p class="navbar-text">&copy; Copyright by @tringo8311</p>
                     </div>
                     <div class="clear"></div>
                 </div>
+                <a href="javascript:void(0)" title="Go to Top" class="scroll2Top"><span class="glyphicon glyphicon-chevron-up"></span></a>
             </div>
         </div>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -125,7 +201,7 @@
             e=o.createElement(i);r=o.getElementsByTagName(i)[0];
             e.src='//www.google-analytics.com/analytics.js';
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create', 'UA-49928061-1', 'nails-finder.com');ga('send','pageview');
+            ga('create', 'UA-49928061-1', 'capri14.com');ga('send','pageview');
         </script>
 
         <!-- build:js scripts/vendor.js -->
@@ -134,7 +210,7 @@
         <script src="bower_components/jquery-formatcurrency/jquery.formatCurrency.js"></script>
         <script src="bower_components/underscore.string/lib/underscore.string.js"></script>
         <script src="bower_components/bootstrap-tokenfield/dist/bootstrap-tokenfield.min.js"></script>
-        <script src="bower_components/circliful/js/jquery.circliful.min.js"></script>
+        <!--script src="bower_components/circliful/js/jquery.circliful.min.js"></script-->
         <script src="bower_components/backbone/backbone.js"></script>
         <script src="bower_components/backbone-validation/dist/backbone-validation.js"></script>
 		<script src="bower_components/backbone.localStorage/backbone.localStorage.js"></script>
@@ -182,5 +258,17 @@
         <script src="scripts/views/contact.js"></script>
         <script src="scripts/views/about.js"></script>
         <!-- endbuild -->
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'capri14'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
 </body>
 </html>

@@ -41,13 +41,23 @@ pit.Views = pit.Views || {};
 		},
         doSubmit: function(evt){
             evt.preventDefault();
-            var data = this.$el.find('form').serializeObject();
-            this.model.set(data);
-            var isValid = this.model.isValid(true);
+            var self = this;
+            var data = self.$el.find('form').serializeObject();
+            var actionUrl = self.$el.find('form').attr('action');
+            actionUrl += "?time="+new Date().getTime();
+            self.model.set(data);
+            var isValid = self.model.isValid(true);
             if(isValid){
-                this.$('.alert-success').fadeIn();
-            }
-            else {
+                this.$('.alert-danger').hide();
+                self.$('.alert-success').fadeIn();
+                // Send email
+                $.post(actionUrl, data, function(response){
+                    self.$('.alert-success').hide();
+                    //self.$el.find("form").reset();
+                    pit.dialogModal("Alert", response.message);
+                });
+            } else {
+                this.$('.alert-success').hide();
                 this.$('.alert-danger').fadeIn();
             }
             return false;

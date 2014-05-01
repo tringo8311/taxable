@@ -8,8 +8,8 @@ pit.Views = pit.Views || {};
     pit.Views.GrossView = Backbone.View.extend({
         template: JST['app/scripts/templates/gross.ejs'],
         events: {
-			'blur input.currency': 'modify',
-            'blur input.numeric' : 'modify',
+			'change input.currency': 'modify',
+            'change input.numeric' : 'modify',
             'change input.conditional-type' : 'modify',
             'submit form' : 'onSubmit'/*,            
 			'click #grossCalculate': 'calculate'*/
@@ -23,17 +23,45 @@ pit.Views = pit.Views || {};
             // Format number
             //console.log(this.model.toNumberFormat());
 			this.$el.html(this.template(this.model.toNumberFormat()));
-            this.$el.find('input.currency').formatCurrencyLive({
-                colorize:true,
-                symbol: "",
-                decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
-                digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
-                roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
-            });
+            if(pit.isMobile()){
+                this.$el.find('input.currency').on("blur", function(){
+                    $(this).formatCurrency({
+                        colorize:true,
+                        symbol: "",
+                        decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
+                        digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
+                        roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
+                    });
+                });
+            }else{
+                this.$el.find('input.currency').formatCurrencyLive({
+                    colorize:true,
+                    symbol: "",
+                    decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
+                    digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
+                    roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
+                });
+            }
+            this.renderRating();
 			return this;
 		},
+        renderRating: function(model, value, options){
+            var self = this, val = 0, rateArr = [
+                ['social_insurance', '#grossSocialInsuranceRate'],
+                ['health_insurance', '#grossHealthInsuranceRate'],
+                ['unemployment_insurance', '#grossUnemploymentInsuranceRate'],
+                ['social_insurance_company', '#grossSocialInsuranceRateCompany'],
+                ['health_insurance_company', '#grossHealthInsuranceRateCompany'],
+                ['unemployment_insurance_company', '#grossUnemploymentInsuranceRateCompany'],
+            ];
+            _.map(rateArr, function(a){
+                val = pit.SingletonModel.settingModel.get(a[0]);
+                self.$el.find(a[1]).html(val+"%");
+            });            
+        },
         doChangeSetting: function(model, value, options){
             this.calculate(options);
+            this.renderRating();
         },
         modify: function(e){
             var self = this, valRaw = null;
@@ -50,6 +78,11 @@ pit.Views = pit.Views || {};
         onSubmit: function(e){
             var self = this;
             e.preventDefault();
+            // In case mobile refill data from form
+            if(pit.isMobile()){
+                var data = JSON.stringify(self.$el.find('form').serializeObjectAsNumber());
+                self.model.set(data);
+            }
             self.calculate(e);
             return false;  
         },
@@ -88,7 +121,7 @@ pit.Views = pit.Views || {};
             // Unemployment Insurance
             var $unemploymentInsurance = $("#grossUnemploymentInsurance"),
                 $unemploymentInsuranceVal = 0;
-                console.log($includeUnemploymentInsurance);
+                //console.log($includeUnemploymentInsurance);
             if($includeUnemploymentInsurance){
                 $unemploymentInsuranceVal = $grossSalaryPer100 * settingModel.get('unemployment_insurance');
             }            

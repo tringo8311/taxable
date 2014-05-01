@@ -1,106 +1,106 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title"><span class="glyphicon glyphicon glyphicon-th-large"></span> Net to Gross</h3>
+    <h3 class="panel-title"><span class="glyphicon glyphicon glyphicon-th-large"></span> Lương Thực lãnh (Net) sang lương Gộp (Gross)</h3>
   </div>
   <div class="panel-body">
-    <div class="net-form">
+    <div class="net-form col-md-6 col-sm-12">
       <form class="form-horizontal col-md-12" role="form" name="netForm" action="" method="post">
           <div class="form-group">
-            <label class="col-md-4 control-label">Net Salary</label>
+            <label class="col-md-4 control-label">Lương Thực lãnh</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon">VND</span>
               <input class="form-control currency" id="netSalary" name="net_salary" type="text" value="<%= net_salary %>" maxlength="14"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào tiền lương bạn muốn lãnh.">?</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-4 control-label">Bonus</label>
+            <label class="col-md-4 control-label">Các khoản thưởng</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon">VND</span>
               <input class="form-control currency" id="netBonus" name="bonus" type="text" readonly="" value="<%= bonus %>" maxlength="14"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số tiền thưởng mà bạn nhận được.">?</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-4 control-label">Allowances</label>
+            <label class="col-md-4 control-label">Các khoản trợ cấp</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon">VND</span>
               <input class="form-control currency" id="netAllowances" name="allowances" type="text" readonly="" value="<%= allowances %>" maxlength="14"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số tiền trợ cấp nếu có.">?</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-4 control-label">Dependants (person)</label>
+            <label class="col-md-4 control-label">Số Người phụ thuộc</label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
               <input class="form-control numeric" id="netDependants" name="dependants" type="number" value="<%= dependants %>"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Popover text goes here">?</span>
+              <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số lượng người phụ thuộc nếu có. Bạn có thể để trống.">?</span>
             </div>
           </div>
           <div class="form-group">
             <div class="col-md-offset-4 col-md-10">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="include_unemployment_insurance" class="conditional-type" value="1" <%if (include_unemployment_insurance) { %> checked="" <% } %>/>Include Unemployment Insurance
+                  <input type="checkbox" name="include_unemployment_insurance" class="conditional-type" value="1" <%if (include_unemployment_insurance) { %> checked="" <% } %>/>Có Bảo hiểm Thất nghiệp (BHTN)
                 </label>
               </div>
             </div>
           </div>
           <div class="form-actions">
             <div class="pull-right">
-              <button id="netCalculate" class="btn btn-success" type="submit"><span class="glyphicon glyphicon-play"></span> Calculate</button>
+              <button id="netCalculate" class="btn btn-success" type="submit"><span class="glyphicon glyphicon-play"></span> Tính toán</button>
             </div>
           </div>
           <div class="clearfix"></div>
       </form>
     </div>
-    <div id="netResult" class="net-result">
+    <div id="netResult" class="net-result col-md-6 col-sm-12">
       <div class="list-group">
         <a href="javascript:void(0)" class="list-group-item active">
-          <span>For Employee</span>
+          <span>Người lao động</span>
         </a>
         <div class="list-group-item clearfix">
-          <span>Social Insurance</span>
+          <span>Bảo hiểm Xã hội</span> (<span id="netSocialInsuranceRate"></span>)
           <span class="badge" id="netSocialInsurance">0</span>
         </div>
         <div class="list-group-item clearfix">
-          <span>Health Insurance</span>
+          <span>Bảo hiểm Y tế</span> (<span id="netHealthInsuranceRate"></span>)
           <span class="badge" id="netHealthInsurance">0</span>
         </div>
         <div class="list-group-item clearfix">
-          <span>Unemployment Insurance</span>
+          <span>Bảo hiểm thất nghiệp</span> (<span id="netUnemploymentInsuranceRate"></span>)
           <span class="badge" id="netUnemploymentInsurance">0</span>
         </div>
         <div class="list-group-item clearfix">
-          <span>Total Insurance</span>
+          <span>Tổng cộng Bảo hiểm</span>
           <span class="badge" id="netTotalInsurance">0</span>
         </div>
         <div class="list-group-item">
-          <span>Salary Before PIT</span>
+          <span>Lương trước Thuế</span>
           <span class="badge" id="netSalaryBeforePIT">0</span>
         </div>
         <div class="list-group-item clearfix">
-          <span>Personal Incoming Tax (PIT)</span>
+          <span>Thuế TNCN</span>
           <span class="badge badge-warning" id="netPIT">0</span>
         </div>
         <div class="list-group-item clearfix">
-          <span>Gross Salary</span>
+          <span>Lương Gộp</span>
           <span class="badge badge-success" id="netGrossSalary">0</span>
         </div>
         <a href="javascript:void(0)" class="list-group-item active">
-          <span>For Company</span>
+          <span>Doanh nghiệp</span>
           <span class="badge" id="netInsuranceTotal">0</span>
         </a>
         <div class="list-group-item clearfix">
-          <span>Social Insurance</span>
+          <span>Bảo hiểm Xã hội</span> (<span id="netSocialInsuranceRateCompany"></span>)
           <span class="badge" id="netSocialInsuranceCompany">0</span>
         </div>
         <div class="list-group-item clearfix">
-          <span>Health Insurance</span>
+          <span>Bảo hiểm Y tế</span> (<span id="netHealthInsuranceRateCompany"></span>)
           <span class="badge" id="netHealthInsuranceCompany">0</span>
         </div>
         <div class="list-group-item clearfix">
-          <span>Unemployment Insurance</span>
+          <span>Bảo hiểm thất nghiệp</span> (<span id="netUnemploymentInsuranceRateCompany"></span>)
           <span class="badge" id="netUnemploymentInsuranceCompany">0</span>
         </div>
       </div>

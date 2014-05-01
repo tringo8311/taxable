@@ -8,8 +8,8 @@ pit.Views = pit.Views || {};
     pit.Views.ExtraView = Backbone.View.extend({
         template: JST['app/scripts/templates/extra.ejs'],
         events: {
-			'blur input.currency': 'modify',
-            'blur input.numeric': 'modify',
+			'change input.currency': 'modify',
+            'change input.numeric': 'modify',
             'change input.token-input': 'modify',
             'click #calculateRevertPITRate' : 'calculateRevertPITRate',
             'click #calculatePITRate' : 'calculatePITRate',
@@ -17,17 +17,32 @@ pit.Views = pit.Views || {};
             'click #unemploymentCalculate' : 'unemploymentCalculate'
 		},
         initialize: function () {
+            this.listenTo(pit.SingletonModel.settingModel, 'change', this.doChangeSetting);
             this.render();
         },
         render: function () {
+            // Set Value for pregnant subsidy
+            var settingModel = pit.SingletonModel.settingModel;
+            this.model.set('pregnant_subsidy', parseInt(settingModel.get('min_range')) * 2);
+
 			this.$el.html(this.template(this.model.toNumberFormat()));
-            this.$el.find('input.currency').formatCurrencyLive({
-                colorize:true,
-                symbol: "",
-                decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
-                digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
-                roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
-            });
+            if(pit.isMobile()){
+                this.$el.find('input.currency').formatCurrency({
+                    colorize:true,
+                    symbol: "",
+                    decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
+                    digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
+                    roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
+                });
+            }else{
+                this.$el.find('input.currency').formatCurrencyLive({
+                        colorize:true,
+                        symbol: "",
+                        decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
+                        digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
+                        roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
+                    });
+            }
             this.$el.find('input.token-input').tokenfield({limit:12,delimiter:';'})
                 .on('tokenfield:preparetoken', function (e) {
                     e.token.value = parseFloat(e.token.value);
@@ -43,6 +58,10 @@ pit.Views = pit.Views || {};
                 });
 			return this;
 		},
+        doChangeSetting : function(model, value, options){
+            //console.log("value:"+parseInt(model.get('min_range'))*2);
+            this.model.set('pregnant_subsidy', parseInt(model.get('min_range'))*2);
+        },
         modify: function(e){
             var self = this, valRaw = null;
             valRaw = $.trim(e.target.value);
@@ -57,6 +76,17 @@ pit.Views = pit.Views || {};
             var extraSalaryPaid = 0;
             extraSalaryPaid = settingModel.process_pit_rate(this.model.get('salary_paid'));
             pit.pasteAndFormatValue(this.$el.find('.pitRate-article .total'), extraSalaryPaid);
+
+            // Detail PIT Rate
+            var result = $("<table class='table table-striped table-bordered table-hover'/>");
+            var template = _.template("<tr><td><%= label %></td><td><%= rate %>%</td><td><%= submitted %>(VND)</td></tr>");
+            _.each(pit.SingletonModel.settingModel.process_pit_rate_detail(this.model.get('salary_paid'), null), function(item){
+                if(item.submitted > 0){
+                    item.submitted = _.string.numberFormat(item.submitted, 0);
+                }
+                result.append(template(item));
+            });
+            this.$el.find('#pitRateResult').html(result);
             return false;
         },
         calculateRevertPITRate: function(e){
@@ -69,7 +99,8 @@ pit.Views = pit.Views || {};
         pregnantCalculate: function(e){
             var settingModel = pit.SingletonModel.settingModel;
             var benefitPaid = 0, pregnantSalaryAvg = 0, pregnantSalaryArr = [],
-                pregnantSalary = this.model.get('pregnant_salary_gross_average');
+                pregnantSalary = this.model.get('pregnant_salary_gross_average'),
+                pregnantSubsidy = this.model.get("pregnant_subsidy");
             if($.isNumeric(pregnantSalary))
                 pregnantSalaryArr = [pregnantSalary];
             else if(pregnantSalary != null && pregnantSalary != 0)
@@ -84,6 +115,9 @@ pit.Views = pit.Views || {};
                 //pregnantSalaryAvg = parseInt(settingModel.get('max_range'));
             benefitPaid = pregnantSalaryAvg / 100;
             benefitPaid *= this.model.get('pregnant_percent') * this.model.get('pregnant_months');
+            benefitPaid += pregnantSubsidy;
+
+            pit.pasteAndFormatValue(this.$el.find('.pregnant-article input[name=pregnant_subsidy]'), pregnantSubsidy);
             pit.pasteAndFormatValue(this.$el.find('.pregnant-article .total'), benefitPaid);
             return false;
         },

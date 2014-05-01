@@ -1,64 +1,108 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Setting</h3>
+    <h3 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Cài đặt</h3>
   </div>
   <div class="panel-body">
     <form class="form-horizontal col-md-12" role="form" name="grossForm" action="" method="post">
       <div class="form-group">
-        <label class="col-md-4 control-label">Social Insurance(%)</label>
+        <label class="col-md-4 control-label">Bảo hiểm Xã hội (%)</label>
         <div class="col-md-8 input-group even-2">
-          <input class="form-control currency" id="settingSocialInsurance" name="social_insurance" type="text" value="<%= social_insurance %>" maxlength="3" title="Employee"/>
-          <input class="form-control currency" id="settingSocialInsuranceCompany" name="social_insurance_company" type="text" value="<%= social_insurance_company %>" maxlength="3" title="Company"/>
           <span class="input-group-addon">%</span>
+          <input class="form-control currency" id="settingSocialInsurance" name="social_insurance" type="text" value="<%= social_insurance %>" maxlength="4" title="Employee"/>
+          <input class="form-control currency" id="settingSocialInsuranceCompany" name="social_insurance_company" type="text" value="<%= social_insurance_company %>" maxlength="4" title="Company"/>
+          <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số % đóng BHXH của người lao động và doanh nghiệp.">?</span>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-4 control-label">Health Insurance(%)</label>
+        <label class="col-md-4 control-label">Bảo hiểm Y tế (%)</label>
         <div class="col-md-8 input-group even-2">
-          <input class="form-control currency" id="settingHealthInsurance" name="health_insurance" type="text" value="<%= health_insurance %>" maxlength="2" title="Employee"/>
-          <input class="form-control currency" id="settingHealthInsuranceCompany" name="health_insurance_company" type="text" value="<%= health_insurance_company %>" maxlength="2" title="Company"/>
           <span class="input-group-addon">%</span>
+          <input class="form-control currency" id="settingHealthInsurance" name="health_insurance" type="text" value="<%= health_insurance %>" maxlength="4" title="Employee"/>
+          <input class="form-control currency" id="settingHealthInsuranceCompany" name="health_insurance_company" type="text" value="<%= health_insurance_company %>" maxlength="4" title="Company"/>
+          <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số % đóng BHYT của người lao động và doanh nghiệp.">?</span>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-4 control-label">Unemployment Insurance(%)</label>
+        <label class="col-md-4 control-label">Bảo hiểm Thất nghiệp (%)</label>
         <div class="col-md-8 input-group even-2">
-          <input class="form-control currency" id="settingUnemploymentInsurance" name="unemployment_insurance" type="text" value="<%= unemployment_insurance %>" maxlength="2" title="Employee"/>
-          <input class="form-control currency" id="settingUnemploymentInsuranceCompany" name="unemployment_insurance_company" type="text" value="<%= unemployment_insurance_company %>" maxlength="2" title="Company"/>
           <span class="input-group-addon">%</span>
+          <input class="form-control currency" id="settingUnemploymentInsurance" name="unemployment_insurance" type="text" value="<%= unemployment_insurance %>" maxlength="4" title="Employee"/>
+          <input class="form-control currency" id="settingUnemploymentInsuranceCompany" name="unemployment_insurance_company" type="text" value="<%= unemployment_insurance_company %>" maxlength="4" title="Company"/>
+          <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số % đóng BHTN cho người lao động và doanh nghiệp.">?</span>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-4 control-label">Max range(SI, HI and UI) (VND)</label>
+        <label class="col-md-4 control-label">Lương cao nhất đóng BHXH (VND)</label>
         <div class="col-md-8 input-group">
+          <span class="input-group-addon">VND</span>
           <input class="form-control currency" id="settingMaxRange" name="max_range" type="text" value="<%= max_range %>"/>
-          <span class="input-group-addon">VND</span>
+          <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số tiền cao nhất để đóng BHXH.">?</span>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-4 control-label">Min range(SI, HI and UI) (VND)</label>
+        <label class="col-md-4 control-label">Lương Cơ sở (VND)</label>
         <div class="col-md-8 input-group">
+          <span class="input-group-addon">VND</span>
           <input class="form-control currency" id="settingMinRange" name="min_range" type="text" value="<%= min_range %>"/>
-          <span class="input-group-addon">VND</span>
+          <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số tiền lương cơ sở.">?</span>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-4 control-label">Deduction for Taxpayer (VND)</label>
+        <label class="col-md-4 control-label">Lương thấp nhất theo khu vực (VND)</label>
+        <div class="col-md-8 input-group">
+          <span class="input-group-addon">VND</span>
+          <input class="form-control currency" id="settingMinRangeArea" name="min_range_area" type="text" value="<%= min_range_area %>"/>
+          <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số tiền lương thấp nhất theo khu vực cụ thể.<br>Vùng I: 2.700.000 đồng/tháng; <br>Vùng II: 2.400.000 đồng/tháng;<br> Vùng III: 2.100.000 đồng/tháng; <br>Vùng IV: 1.900.000 đồng/tháng.">?</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label">Giảm trừ cho người đóng thuế (VND)</label>
         <div class="col-md-8  input-group">
+          <span class="input-group-addon">VND</span>
           <input class="form-control currency" id="settingDeduction" name="deduction" type="text" value="<%= deduction %>"/>
-          <span class="input-group-addon">VND</span>
+          <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số tiền giảm trừ cho bản thân người lao động." >?</span>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-4 control-label">Deduction for each dependant (VND)</label>
+        <label class="col-md-4 control-label">Giảm trừ cho từng người phụ thuộc (VND)</label>
         <div class="col-md-8  input-group">
-          <input class="form-control currency" id="setting" name="deduction_each_dependant" type="text" value="<%= deduction_each_dependant %>"/>
           <span class="input-group-addon">VND</span>
+          <input class="form-control currency" id="setting" name="deduction_each_dependant" type="text" value="<%= deduction_each_dependant %>"/>
+          <span class="input-group-addon" data-container="body" data-toggle="popover" data-placement="left" data-content="Nhập vào số tiền giảm trừ cho 1 người phụ thuộc người lao động.">?</span>
         </div>
       </div>
       <div class="col-md-12 text-right">
-        <button type="button" class="btn btn-info action-pit-rate" data-title="Personal Incoming Tax's Rate" data-container="body" data-toggle="popover" data-placement="auto">Show PIT Rate</button>
+		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#settingRefer">Tham khảo</button>
+        <button type="button" class="btn btn-info action-pit-rate" data-title="Biểu thuế TNCN" data-container="body" data-toggle="popover" data-placement="auto">Biểu thuế TNCN</button>
       </div>
     </form>
+  </div>
+  <div id="settingRefer" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="settingReferLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="settingReferLabel">Mức đóng BHXH hằng tháng</h4>
+      </div>
+      <div class="modal-body">
+		<table cellspacing="0" cellpadding="0" class="table table-striped table-bordered table-hover"><tbody><tr><th rowspan="2">Năm</th><th colspan="3">Người sử dụng lao động (%)</th><th colspan="3">Người lao động (%)</th><th rowspan="2">Tổng cộng (%)</th></tr><tr><td>BHXH</td><td>BHYT</td><td>BHTN</td><td>BHXH</td><td>BHYT</td><td>BHTN</td></tr><tr><td>01/2007</td><td>15</td><td>2</td><td>&nbsp;</td><td>5</td><td>1</td><td>&nbsp;</td><td>23</td></tr><tr><td>01/2009</td><td>15</td><td>2</td><td>1</td><td>5</td><td>1</td><td>1</td><td>25</td></tr><tr><td>Từ 01/2010 đến 12/2011</td><td>16</td><td>3</td><td>1</td><td>6</td><td>1,5</td><td>1</td><td>28,5</td></tr><tr><td>Từ 01/2012 đến 12/2013</td><td>17</td><td>3</td><td>1</td><td>7</td><td>1,5</td><td>1</td><td>30,5</td></tr><tr><td>01/2014 trở đi</td><td>18</td><td>3</td><td>1</td><td>8</td><td>1,5</td><td>1</td><td>32,5</td></tr></tbody></table>
+		<table cellspacing="0" cellpadding="0" class="table table-striped table-bordered table-hover">
+        <tbody><tr><th colspan="2">Lương tối thiểu</th></tr>
+        <tr><td>Từ 01/05/2011</td><td>830,000 VND</td></tr>        
+        <tr><td>Từ 01/05/2012</td><td>1,050,000 VND</td></tr>
+		<tr><td>Từ 01/07/2013</td><td>1,150,000 VND</td></tr>        
+		</tbody></table>
+		<table cellspacing="0" cellpadding="0" class="table table-striped table-bordered table-hover">
+        <tbody><tr><th colspan="3">Giảm trừ gia cảnh</th></tr>
+        <tr><th>Năm</th><th>Cá nhân</th><th>Phụ Thuộc/1 người</th></tr>        
+        <tr><td>Trước 01/07/2013</td><td>4,000,000 VND</td><td>1,600,000 VND</td></tr>
+        <tr><td>Sau 01/07/2013</td><td>9,000,000 VND</td><td>3,600,000 VND</td></tr>
+		</tbody></table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
   </div>
 </div>

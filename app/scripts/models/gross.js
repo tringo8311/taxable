@@ -18,20 +18,20 @@ pit.Models = pit.Models || {};
             'working_days' : 22,
             'no_pay_leave' : 0,
             'dependants' : 0,
-            'include_unemployment_insurance' : 1,
+            'include_unemployment_insurance' : 1
         },
         validate: function(attrs, options) {
             var errors = this.errors = {};
             if(attrs.gross_salary != null) {
                 if (!attrs.gross_salary) {
                     errors.gross_salary = 'Gross_salary is required';
-                    console.log('first name isEmpty validation called');
+                    console.log('Gross_salary isEmpty validation called');
                 }
             }
             if(attrs.taxable_salary != null) {
                 if (!attrs.taxable_salary) {
                     errors.taxable_salary = 'taxable_salary is required';
-                    console.log('last name isEmpty validation called');
+                    console.log('Taxable_salary isEmpty validation called');
                 }else if(!this.validators.min(attrs.taxable_salary, 1900000))
                     errors.taxable_salary = 'Taxable_salary is too min';
             }

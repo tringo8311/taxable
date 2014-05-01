@@ -8,8 +8,8 @@ pit.Views = pit.Views || {};
     pit.Views.NetView = Backbone.View.extend({
         template: JST['app/scripts/templates/net.ejs'],
         events: {
-			'blur input.currency': 'modify',
-            'blur input.numeric': 'modify',
+			'change input.currency': 'modify',
+            'change input.numeric': 'modify',
             'change input.conditional-type' : 'modify',
             'submit form' : 'onSubmit'/*
             'click #netCalculate' : 'calculate'*/
@@ -23,21 +23,70 @@ pit.Views = pit.Views || {};
             // Format number
             //console.log(this.model.toNumberFormat());
 			this.$el.html(this.template(this.model.toNumberFormat()));
-            this.$el.find('input.currency').formatCurrencyLive({
-                colorize:true,
-                symbol: "",
-                decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
-                digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
-                roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
-            });
+            if(pit.isMobile()){
+                this.$el.find('input.currency').on("blur", function(){
+                    $(this).formatCurrency({
+                        colorize:true,
+                        symbol: "",
+                        decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
+                        digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
+                        roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
+                    });
+                });
+            }else{
+                this.$el.find('input.currency').keyup(function(e) {
+                    var e = window.event || e;
+                    var keyUnicode = e.charCode || e.keyCode;
+                    if (e !== undefined) {
+                        switch (keyUnicode) {
+                            case 16: break; // Shift
+                            case 17: break; // Ctrl
+                            case 18: break; // Alt
+                            case 27: this.value = ''; break; // Esc: clear entry
+                            case 35: break; // End
+                            case 36: break; // Home
+                            case 37: break; // cursor left
+                            case 38: break; // cursor up
+                            case 39: break; // cursor right
+                            case 40: break; // cursor down
+                            case 78: break; // N (Opera 9.63+ maps the "." from the number key section to the "N" key too!) (See: http://unixpapa.com/js/key.html search for ". Del")
+                            case 110: break; // . number block (Opera 9.63+ maps the "." from the number block to the "N" key (78) !!!)
+                            case 190: break; // .
+                            default:
+                                $(this).formatCurrency({
+                                    symbol: "",
+                                    decimalSymbol: pit.SingletonModel.settingModel.format.decimalSymbol,
+                                    digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
+                                    roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
+                                });
+                        }
+                    }
+                });
+            }
+            this.renderRating();
 			return this;
 		},
+        renderRating: function(model, value, options){
+            var self = this, val = 0, rateArr = [
+                ['social_insurance', '#netSocialInsuranceRate'],
+                ['health_insurance', '#netHealthInsuranceRate'],
+                ['unemployment_insurance', '#netUnemploymentInsuranceRate'],
+                ['social_insurance_company', '#netSocialInsuranceRateCompany'],
+                ['health_insurance_company', '#netHealthInsuranceRateCompany'],
+                ['unemployment_insurance_company', '#netUnemploymentInsuranceRateCompany'],
+            ];
+            _.map(rateArr, function(a){
+                val = pit.SingletonModel.settingModel.get(a[0]);
+                self.$el.find(a[1]).html(val+"%");
+            });            
+        },
         validate: function() {
             this.model.set(this.name, this.$el.val(), {validate:true});
             this.$msg.text(this.model.errors[this.name] || '');
         },
         doChangeSetting: function(model, value, options){
             this.calculate(options);
+            this.renderRating(model, value, options);
         },
         modify: function(e){
             var self = this, valRaw = null;
@@ -53,6 +102,10 @@ pit.Views = pit.Views || {};
         onSubmit: function(e){
             var self = this;
             e.preventDefault();
+            if(pit.isMobile()){
+                var data = JSON.stringify(self.$el.find('form').serializeObjectAsNumber());
+                self.model.set(data);
+            }
             self.calculate(e);
             return false;  
         },
@@ -63,7 +116,10 @@ pit.Views = pit.Views || {};
                 $allowances = parseInt(this.model.get('allowances')),
                 $dependants = parseInt(this.model.get('dependants')),
                 $maxRange = parseInt(settingModel.get('max_range')),
-                $includeUnemploymentInsurance = this.model.get('include_unemployment_insurance');
+                $includeUnemploymentInsurance = this.model.get('include_unemployment_insurance'),
+                $socialInsPercent = parseFloat(settingModel.get('social_insurance')),
+                $healthInsPercent = parseFloat(settingModel.get('health_insurance')),
+                $unEmploymentInsPercent = parseFloat(settingModel.get('unemployment_insurance'));
 
             // PIT
             var d = new Date();
@@ -81,10 +137,10 @@ pit.Views = pit.Views || {};
             var $netSalaryBeforePITVal = $netPitVal + $netSalary;
             this.pasteValue($netSalaryBeforePIT, $netSalaryBeforePITVal, 'number');
 
-            var totalInsurancePer = parseFloat(settingModel.get('social_insurance')) + parseFloat(settingModel.get('health_insurance')) +
-                                        parseFloat(settingModel.get('unemployment_insurance'));
-            var $netSalaryBeforePITPer100 = 0;
-            if($netSalaryBeforePITVal > $maxRange){
+            var totalInsurancePer = $socialInsPercent + $healthInsPercent + $unEmploymentInsPercent,
+                $netSalaryBeforePITPer100 = 0,
+                $maxRangeAfterInsurance = $maxRange * (totalInsurancePer / 100 );
+            if($netSalaryBeforePITVal > $maxRangeAfterInsurance){
                 $netSalaryBeforePITPer100 = $maxRange / 100;
             }else{
                 $netSalaryBeforePITPer100 = $netSalaryBeforePITVal / (100 - totalInsurancePer);
@@ -92,19 +148,19 @@ pit.Views = pit.Views || {};
 
             // Social Insurance
             var $grossSocialInsurance = $("#netSocialInsurance"),
-                $grossSocialInsuranceVal = $netSalaryBeforePITPer100 * settingModel.get('social_insurance');
+                $grossSocialInsuranceVal = $netSalaryBeforePITPer100 * $socialInsPercent;
             this.pasteValue($grossSocialInsurance, $grossSocialInsuranceVal, 'number');
 
             // Heath Insurance
             var $healthInsurance = $("#netHealthInsurance"),
-                $grossHealthInsuranceVal = $netSalaryBeforePITPer100 * settingModel.get('health_insurance');
+                $grossHealthInsuranceVal = $netSalaryBeforePITPer100 * $healthInsPercent;
             this.pasteValue($healthInsurance, $grossHealthInsuranceVal, 'number');
 
             // Unemployment Insurance
             var $unemploymentInsurance = $("#netUnemploymentInsurance"),
                 $unemploymentInsuranceVal = 0;
             if($includeUnemploymentInsurance){
-                $unemploymentInsuranceVal = $netSalaryBeforePITPer100 * settingModel.get('unemployment_insurance');
+                $unemploymentInsuranceVal = $netSalaryBeforePITPer100 * $unEmploymentInsPercent;
             }            
             this.pasteValue($unemploymentInsurance, $unemploymentInsuranceVal, 'number');
 
@@ -115,7 +171,6 @@ pit.Views = pit.Views || {};
             // Gross Salary
             var $grossSalary = $("#netGrossSalary");
             var $grossSalaryVal = $netSalary + $totalInsuranceVal + $netPitVal;
-
             this.pasteValue($grossSalary, $grossSalaryVal, 'number');
 
             // For company

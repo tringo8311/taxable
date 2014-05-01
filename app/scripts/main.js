@@ -60,7 +60,7 @@ demoPits.push({
 	title: 'Jul',
 	gross: 10000000,
 	bonus: 150000,
-	insurance_paid: 3000000,
+	insurance_paid: 300000,
 	dependants: 0,
 	pit_paid: 1899098,
 	deduction_of_taxpayer: 9000000
@@ -69,7 +69,7 @@ demoPits.push({
 	title: 'Aug',
 	gross: 10000000,
 	bonus: 150000,
-	insurance_paid: 3000000,
+	insurance_paid: 300000,
 	dependants: 0,
 	pit_paid: 2143000,
 	deduction_of_taxpayer: 9000000
@@ -78,7 +78,7 @@ demoPits.push({
 	title: 'Sep',
 	gross: 10000000,
 	bonus: 150000,
-	insurance_paid: 3000000,
+	insurance_paid: 300000,
 	dependants: 0,
 	pit_paid: 2143000,
 	deduction_of_taxpayer: 9000000
@@ -86,7 +86,7 @@ demoPits.push({
 demoPits.push({
 	title: 'Oct',
 	gross: 10000000,
-	bonus: 3000000,
+	bonus: 300000,
 	insurance_paid: 3000000,
 	dependants: 0,
 	pit_paid: 3000000,
@@ -96,16 +96,16 @@ demoPits.push({
 	title: 'Nov',
 	gross: 10000000,
 	bonus: 150000,
-	insurance_paid: 3000000,
-	dependants: 1,
-	pit_paid: 3000000,
+	insurance_paid: 300000,
+	dependants: 0,
+	pit_paid: 300000,
 	deduction_of_taxpayer: 9000000
 });
 demoPits.push({
 	title: 'Dec',
 	gross: 10000000,
 	bonus: 150000,
-	insurance_paid: 3000000,
+	insurance_paid: 300000,
 	dependants: 0,
 	pit_paid: 3000000,
 	deduction_of_taxpayer: 9000000
@@ -122,14 +122,14 @@ var supportPlatform = [
         dimension: 280,
         text: 'Tablet',
         percent: '80',
-        info: '20 Apr, 2014',
+        info: '25 Apr, 2014',
         colorfg : "#F53477"
     },
     {
         dimension: 280,
         text: 'Smart-phone',
         percent: '60',
-        info: '30 Apr, 2014',
+        info: '05 May, 2014',
         colorfg : "#89C137"
     }
 ];
@@ -143,14 +143,15 @@ window.pit = {
     init: function () {
         'use strict';
 		this.SingletonModel.settingModel = new this.Models.SettingModel();
-        var navbarMainHeight = $("#navbar-main").height();
-        var $this = this;
+        var navMainHeight = $("#navbar-main").height(),
+            $this = this;
+
         AppRouter = Backbone.Router.extend({
             initialize: function (){
-                $("a.link-view", ".navbar-nav").on("click", function(e){
+                $(".nav a.link-view", "#navbar-main").add(".nav a.link-view", ".footer").on("click", function(e){
                     e.preventDefault();
                     // Remove all class active
-                    $("a.link-view", ".navbar-nav").removeClass("active");
+                    $("a.link-view", "#navbar-main").removeClass("active");
                     $(this).addClass("active");
                     var hrefLink = e.target.getAttribute('href');
                     Backbone.history.navigate(hrefLink, {trigger:true});
@@ -179,9 +180,9 @@ window.pit = {
                 // Gross View
                 var eleId = "#gross-2-net-section";
                 if($(eleId).is(':empty'))
-                    new $this.Views.GrossView({el : eleId, model: new $this.Models.GrossModel({gross_salary: 20000000, allowances: 150000, dependants: 1})});
+                    new $this.Views.GrossView({el : eleId, model: new $this.Models.GrossModel({gross_salary: 20000000, allowances: 0, dependants: 0})});
                 $(eleId).show();
-                var topPosition = $(eleId).offset().top - navbarMainHeight;
+                var topPosition = $(eleId).offset().top - navMainHeight;
                 $('html, body').animate({scrollTop: topPosition}, 'slow');
                 $("[data-toggle='popover']", eleId).popover();
             },
@@ -190,9 +191,9 @@ window.pit = {
                 // Net View
                 var eleId = "#net-2-gross-section";
                 if($(eleId).is(':empty'))
-                    new $this.Views.NetView({el : eleId,model: new $this.Models.NetModel({net_salary: 20000000, allowances: 0, dependants: 1})});
+                    new $this.Views.NetView({el : eleId,model: new $this.Models.NetModel({net_salary: 20000000, allowances: 0, dependants: 0})});
                 $(eleId).show();
-                var topPosition = $(eleId).offset().top - navbarMainHeight;
+                var topPosition = $(eleId).offset().top - navMainHeight;
                 $('html, body').animate({scrollTop:topPosition}, 'slow');
                 $("[data-toggle='popover']", eleId).popover();
             },
@@ -203,7 +204,7 @@ window.pit = {
                 if($(eleId).is(':empty'))
                     new $this.Views.PitsView({el : eleId,collection: dataConst.pits});
                 $(eleId).show();
-                var topPosition = $(eleId).offset().top - navbarMainHeight;
+                var topPosition = $(eleId).offset().top - navMainHeight;
                 $('html, body').animate({scrollTop:topPosition}, 'slow');
             },
             extra : function(article){
@@ -217,7 +218,7 @@ window.pit = {
                     if(article!=""){
                         eleId = "#extra-" + article;
                     }
-                    var topPosition = $(eleId).offset().top - navbarMainHeight;
+                    var topPosition = $(eleId).offset().top - navMainHeight;
                     $('html, body').animate({scrollTop:topPosition}, 'slow');
                 });
             },
@@ -229,8 +230,9 @@ window.pit = {
                     new $this.Views.SettingView({el : eleId, model: $this.SingletonModel.settingModel});
                 $(eleId).show();
 
-                var topPosition = $(eleId).offset().top - navbarMainHeight;
+                var topPosition = $(eleId).offset().top - navMainHeight;
                 $('html, body').animate({scrollTop:topPosition}, 'slow');
+                $("[data-toggle='popover']", eleId).popover({html : true});
             },
             news : function(type){
                 // Hide all part page
@@ -273,15 +275,25 @@ window.pit = {
         });
         $("#addthis-toolbox").myAddThis({url:location.href, title: "Taxable", description: "Support calculate Gross, Net, PITs"});
         // Check browser device by width
-        /*var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
-        if(!isMobile)
-            $this.followScroll(".navbar.navbar-default");*/
+        if(!this.isMobile())
+            $this.followScroll("#navbar-main");
+
+        $(document).on("click touchstart", function (e) {
+            var $popover = $('[data-toggle=popover]').popover({html: true});
+            var $target = $(e.target),
+                isPopover = $(e.target).is('[data-toggle=popover]'),
+                inPopover = $(e.target).closest('.popover').length > 0
+
+            //hide only if clicked on button or inside popover
+            if (!isPopover && !inPopover) $popover.popover('hide');
+        });
+
         // Circliful
-        var templateCirc = _.template('<div class="route-map-item pull-left" data-dimension="<%= dimension %>" data-text="<%= text %>" data-info="<%= info %>" data-width="10" data-fontsize="20" data-percent="<%= percent %>" data-fgcolor="<%= colorfg %>" data-bgcolor="#EDF2F3" data-fill="#fff"></div>');
+        /*var templateCirc = _.template('<div class="route-map-item pull-left" data-dimension="<%= dimension %>" data-text="<%= text %>" data-info="<%= info %>" data-width="10" data-fontsize="20" data-percent="<%= percent %>" data-fgcolor="<%= colorfg %>" data-bgcolor="#EDF2F3" data-fill="#fff"></div>');
         _.each(supportPlatform, function(item){
             $("#route-map").append(templateCirc(item));
         });
-        $("#route-map .route-map-item").circliful();
+        $("#route-map .route-map-item").circliful();*/
     },
     pasteAndFormatValue: function(obj, val, type){
         var toFormat = _.string.numberFormat(val, 2);
@@ -296,33 +308,33 @@ window.pit = {
         $(window).scroll(function (event) {
             // what the y position of the scroll is
             var y = $(this).scrollTop();
-            y -= 200;
             // whether that's below the form
             if (y >= top) {
               // if so, ad the fixed class
-              $(ele).addClass('navbar-fixed-top');
+              $(ele).addClass('isStuck');
             } else {
                 // otherwise remove it
-                $(ele).removeClass('navbar-fixed-top');
+                $(ele).removeClass('isStuck');
             }
         });
+    },
+    dialogModal: function(title, content){
+        var taxableModalEle = JST['app/scripts/templates/modal.ejs'];
+
+        if(!$("#taxableModal").length){
+            $("body").append(taxableModalEle);
+        }
+        var taxableModal = $("#taxableModal");
+        taxableModal.find('.modal-title').text(title);
+        taxableModal.find('.modal-body').html(content);
+        taxableModal.modal('show');
+    },
+    isMobile : function(){
+        return (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
     }
 };
 
 (function (a) {
-    /* Go to http://www.addthis.com/get/smart-layers to customize -->
-        <script type="text/javascript" src=""></script>
-        <script type="text/javascript">
-          addthis.layers({
-            'theme' : 'transparent',
-            'share' : {
-              'position' : 'left',
-              'numPreferredServices' : 5
-            },
-            'whatsnext' : {},
-            'recommended' : {}
-          });
-        </script>*/
     function g(b, c) {
         var addthis_share = {
             'url': c.url,
@@ -348,7 +360,50 @@ window.pit = {
     }, a.getScript(c, function(){ 
         __addthis__(); 
     });
+    $.fn.serializeArrayAsNumber = function() {
+        var r20 = /%20/g,
+        rbracket = /\[\]$/,
+        rCRLF = /\r?\n/g,
+        rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
+        rsubmittable = /^(?:input|select|textarea|keygen)/i;
+		return this.map(function() {
+			// Can add propHook for "elements" to filter or add form elements
+			var elements = jQuery.prop( this, "elements" );
+			return elements ? jQuery.makeArray( elements ) : this;
+		})
+		.filter(function() {
+			var type = this.type;
 
+			// Use .is( ":disabled" ) so that fieldset[disabled] works
+			return this.name && !jQuery( this ).is( ":disabled" ) &&
+				rsubmittable.test( this.nodeName ) && !rsubmitterTypes.test( type ) && this.checked ;
+		})
+		.map(function( i, elem ) {
+			var val = jQuery( this ).asNumber();
+			return val == null ?
+				null :
+				jQuery.isArray( val ) ?
+					jQuery.map( val, function( val ) {
+						return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
+					}) :
+					{ name: elem.name, value: val };
+		}).get();
+	}
+    $.fn.serializeObjectAsNumber = function() {
+        var o = {};
+        var a = this.serializeArrayAsNumber();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
     a.fn.myAddThis = function (b) {
         var c = a.extend({}, b),h = this;
         d ? g(h, c) : e.bind("addthisloaded", function () {
