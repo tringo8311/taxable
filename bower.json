@@ -9,5 +9,10 @@
     "modernizr": "~2.6.2",
     "backbone.localStorage": "~1.1.7"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "bootstrap-tokenfield": "~0.12.1",
+    "backbone-validation": "~0.9.1",
+    "underscore.string": "~2.4.0",
+    "jquery-formatcurrency": "https://github.com/fernandofig/jquery-formatcurrency"
+  }
 }

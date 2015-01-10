@@ -11,6 +11,7 @@ pit.Views = pit.Views || {};
 			'change input.currency': 'modify',
             'change input.numeric': 'modify',
             'change input.conditional-type' : 'modify',
+            'click #netForeignSalaryPlay' :  'doConvertForeignSalary',
             'submit form' : 'onSubmit'/*
             'click #netCalculate' : 'calculate'*/
 		},
@@ -78,7 +79,7 @@ pit.Views = pit.Views || {};
             _.map(rateArr, function(a){
                 val = pit.SingletonModel.settingModel.get(a[0]);
                 self.$el.find(a[1]).html(val+"%");
-            });            
+            });
         },
         validate: function() {
             this.model.set(this.name, this.$el.val(), {validate:true});
@@ -88,11 +89,24 @@ pit.Views = pit.Views || {};
             this.calculate(options);
             this.renderRating(model, value, options);
         },
+        doConvertForeignSalary: function(e){
+            var self = this, netForeignSalary = $("#netForeignSalary").asNumber(),
+                oldValue = $("#netForeignSalary").prop("old-val");
+            if(netForeignSalary > 0 && oldValue != netForeignSalary) {
+                $("#netForeignSalary").prop("old-val", netForeignSalary);
+                jQuery(e.target).addClass("glyphicon-refresh-animate");
+                window.pit.exchangeRate("USD", "VND", netForeignSalary).then(function (resultVal) {
+                    window.pit.pasteAndFormatValue($("#netSalary"), resultVal, "number");
+                    jQuery(e.target).removeClass("glyphicon-refresh-animate");
+                    $("#netSalary").trigger("change");
+                });
+            }
+        },
         modify: function(e){
             var self = this, valRaw = null;
             valRaw = $.trim(e.target.value);
             if(e.target.type == 'checkbox'){
-                valRaw = jQuery(e.target).is(":checked") ? 1 : 0;                
+                valRaw = jQuery(e.target).is(":checked") ? 1 : 0;
             }else if(valRaw!=""){
                 valRaw = $(e.target).asNumber();
             }
@@ -107,7 +121,7 @@ pit.Views = pit.Views || {};
                 self.model.set(data);
             }
             self.calculate(e);
-            return false;  
+            return false;
         },
         calculate: function(e){
             var settingModel = pit.SingletonModel.settingModel;
@@ -161,7 +175,7 @@ pit.Views = pit.Views || {};
                 $unemploymentInsuranceVal = 0;
             if($includeUnemploymentInsurance){
                 $unemploymentInsuranceVal = $netSalaryBeforePITPer100 * $unEmploymentInsPercent;
-            }            
+            }
             this.pasteValue($unemploymentInsurance, $unemploymentInsuranceVal, 'number');
 
             // Total Insurance

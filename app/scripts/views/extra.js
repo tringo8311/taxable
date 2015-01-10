@@ -11,6 +11,7 @@ pit.Views = pit.Views || {};
 			'change input.currency': 'modify',
             'change input.numeric': 'modify',
             'change input.token-input': 'modify',
+            'click #calculateExchange' : 'calculateExchange',
             'click #calculateRevertPITRate' : 'calculateRevertPITRate',
             'click #calculatePITRate' : 'calculatePITRate',
             'click #pregnantCalculate' : 'pregnantCalculate',
@@ -70,7 +71,17 @@ pit.Views = pit.Views || {};
             }
             self.model.set(e.target.name, valRaw);
             //self.calculate(e);
-        },        
+        },
+        calculateExchange: function(e){
+            var exchangeFrom = this.model.get('exchange_from');
+            var exchangeTo = this.model.get('exchange_to');
+            var exchangeValue = this.model.get('exchange_value');
+            var self = this;
+            window.pit.exchangeRate(exchangeFrom, exchangeTo, exchangeValue).then(function (resultVal) {
+                pit.pasteAndFormatValue(self.$el.find('.exchange-article .total'), resultVal);
+            });
+            return false;
+        },
         calculatePITRate: function(e){
             var settingModel = pit.SingletonModel.settingModel;
             var extraSalaryPaid = 0;
@@ -137,7 +148,7 @@ pit.Views = pit.Views || {};
 
             /*if(unemploymentSalaryAvg > parseInt(settingModel.get('max_range')))
                 unemploymentSalaryAvg = parseInt(settingModel.get('max_range'));*/
-            
+
             var benefitPaid = unemploymentSalaryAvg / 100;
             benefitPaid *= this.model.get('unemployment_percent') * this.model.get('unemployment_months');
             pit.pasteAndFormatValue(this.$el.find('.unemployment-article .total'), benefitPaid);

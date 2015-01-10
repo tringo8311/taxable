@@ -11,7 +11,8 @@ pit.Views = pit.Views || {};
 			'change input.currency': 'modify',
             'change input.numeric' : 'modify',
             'change input.conditional-type' : 'modify',
-            'submit form' : 'onSubmit'/*,            
+            'click #grossForeignSalaryPlay' :  'doConvertForeignSalary',
+            'submit form' : 'onSubmit'/*,
 			'click #grossCalculate': 'calculate'*/
 		},
         initialize: function(){
@@ -41,6 +42,13 @@ pit.Views = pit.Views || {};
                     digitGroupSymbol: pit.SingletonModel.settingModel.format.digitGroupSymbol,
                     roundToDecimalPlace: pit.SingletonModel.settingModel.format.roundToDecimalPlace
                 });
+                this.$el.find("input.currency").off("blur.afterFormatCurrency").on("blur.afterFormatCurrency", function(){
+                    var oldVal = $(this).prop("old-value"), newVal = $(this).asNumber() + "";
+                    if(oldVal != newVal){
+                        $(this).trigger("change");
+                    }
+                    $(this).prop("old-value", newVal);
+                });
             }
             this.renderRating();
 			return this;
@@ -57,19 +65,34 @@ pit.Views = pit.Views || {};
             _.map(rateArr, function(a){
                 val = pit.SingletonModel.settingModel.get(a[0]);
                 self.$el.find(a[1]).html(val+"%");
-            });            
+            });
         },
         doChangeSetting: function(model, value, options){
             this.calculate(options);
             this.renderRating();
+        },
+        doConvertForeignSalary: function(e){
+            var self = this,
+                grossForeignSalary = $("#grossForeignSalary").asNumber(),
+                oldValue = $("#grossForeignSalary").prop("old-val");
+            if(grossForeignSalary > 0 && oldValue != grossForeignSalary){
+                $("#grossForeignSalary").prop("old-val", grossForeignSalary);
+                jQuery(e.target).addClass("glyphicon-refresh-animate");
+                window.pit.exchangeRate("USD", "VND", grossForeignSalary).then(function(resultVal){
+                    window.pit.pasteAndFormatValue($("#grossSalary"), resultVal, "number");
+                    jQuery(e.target).removeClass("glyphicon-refresh-animate");
+                    $("#grossSalary").trigger("change");
+                });
+            }
+            return false;
         },
         modify: function(e){
             var self = this, valRaw = null;
             valRaw = $.trim(e.target.value);
 
             if(e.target.type == 'checkbox'){
-                valRaw = jQuery(e.target).is(":checked") ? 1 : 0;                
-            }else if(valRaw != ""){                
+                valRaw = jQuery(e.target).is(":checked") ? 1 : 0;
+            }else if(valRaw != ""){
                 valRaw = $(e.target).asNumber();
             }
             self.model.set(e.target.name, valRaw);
@@ -84,7 +107,7 @@ pit.Views = pit.Views || {};
                 self.model.set(data);
             }
             self.calculate(e);
-            return false;  
+            return false;
         },
         calculate: function(e){
             var settingModel = pit.SingletonModel.settingModel;
@@ -124,7 +147,7 @@ pit.Views = pit.Views || {};
                 //console.log($includeUnemploymentInsurance);
             if($includeUnemploymentInsurance){
                 $unemploymentInsuranceVal = $grossSalaryPer100 * settingModel.get('unemployment_insurance');
-            }            
+            }
             this.pasteValue($unemploymentInsurance, $unemploymentInsuranceVal, 'number');
 
             // Total Insurance
@@ -180,12 +203,12 @@ pit.Views = pit.Views || {};
             var $unemploymentInsuranceCompany = $("#grossUnemploymentInsuranceCompany"),
                 $unemploymentInsuranceCompanyVal = 0;
             if($includeUnemploymentInsurance){
-                $unemploymentInsuranceCompanyVal = $grossSalaryPer100 * settingModel.get('unemployment_insurance_company');        
-            }            
+                $unemploymentInsuranceCompanyVal = $grossSalaryPer100 * settingModel.get('unemployment_insurance_company');
+            }
             this.pasteValue($unemploymentInsuranceCompany, $unemploymentInsuranceCompanyVal, 'number');
 
             // Total Insurance
-            this.pasteValue($("#grossInsuranceTotal"), $grossSocialInsuranceCompanyVal + $grossHealthInsuranceCompanyVal + $unemploymentInsuranceCompanyVal, 'number');            
+            this.pasteValue($("#grossInsuranceTotal"), $grossSocialInsuranceCompanyVal + $grossHealthInsuranceCompanyVal + $unemploymentInsuranceCompanyVal, 'number');
 
             return $netSalaryVal;
         },

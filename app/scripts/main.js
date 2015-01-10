@@ -273,7 +273,7 @@ window.pit = {
             pit.scrollToTop();
             return false;
         });
-        $("#addthis-toolbox").myAddThis({url:location.href, title: "Taxable", description: "Support calculate Gross, Net, PITs"});
+        //$("#addthis-toolbox").myAddThis({url:location.href, title: "Taxable", description: "Support calculate Gross, Net, PITs"});
         // Check browser device by width
         if(!this.isMobile())
             $this.followScroll("#navbar-main");
@@ -297,7 +297,24 @@ window.pit = {
     },
     pasteAndFormatValue: function(obj, val, type){
         var toFormat = _.string.numberFormat(val, 2);
-        obj.text(toFormat);
+        if(obj.is("input")){
+            obj.val(toFormat);
+        }else{
+            obj.text(toFormat);
+        }
+    },
+    exchangeRate: function(from, to, inputVal){
+        var defer = $.Deferred();
+        $.ajax({
+            dataType: "jsonp",
+            type: "GET",
+            url: "http://rate-exchange.appspot.com/currency",
+            data: { from: from, to: to, q: parseInt(inputVal)},
+            async : false
+        }).done(function(responseData){
+            defer.resolve(responseData.v);
+        });
+        return defer.promise();
     },
     // Scroll to top
     scrollToTop: function(){
@@ -350,15 +367,15 @@ window.pit = {
         }
         toolbox.html(htmlButtons);
         addthis.toolbox(b, {}, addthis_share);
-    }    
+    }
     var b = "__addthis__",
         c = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-533cfacd5b6fba4d" ,
         d = !1,
         e = a(document);
     window[b] = function () {
-        d = !0, e.trigger("addthisloaded") 
-    }, a.getScript(c, function(){ 
-        __addthis__(); 
+        d = !0, e.trigger("addthisloaded")
+    }, a.getScript(c, function(){
+        __addthis__();
     });
     $.fn.serializeArrayAsNumber = function() {
         var r20 = /%20/g,
@@ -413,7 +430,6 @@ window.pit = {
     }
 })(jQuery);
 
-
 (function (a) {
     function g(b, c) {
         var d = new google.maps.Geocoder;
@@ -451,7 +467,7 @@ window.pit = {
     };
     a.fn.gmaps = function (b) {
         var c = a.extend({}, f, b), h = this;
-        d ? 
+        d ?
         g(h, c) : e.bind("gmapsloaded", function () {
             g(h, c)
         });

@@ -14,6 +14,7 @@ pit.Models = pit.Models || {};
         },
 
         defaults: {
+            'foreign_salary' : 0,
             'net_salary' : 0,
             'bonus' : 0,
             'allowances' : 0,

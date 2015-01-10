@@ -6,14 +6,15 @@ pit.Models = pit.Models || {};
     'use strict';
 
     pit.Models.ExtraModel = Backbone.Model.extend({
-
         url: '',
-
         initialize: function() {
             this.options = _.extend({}, this.defaults, this.options);
         },
 
         defaults: {
+            exchange_from: "USD",
+            exchange_to: "VND",
+            exchange_value: 0,
             salary_paid : 0,
             pit_tax_paid : 0,
             pregnant_salary_gross_average : null,

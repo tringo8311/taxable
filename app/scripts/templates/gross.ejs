@@ -6,11 +6,21 @@
     <div class="gross-form col-md-6 col-sm-12">
       <form class="form-horizontal col-md-12" role="form" name="grossForm" action="" method="post">
           <div class="form-group">
-            <label class="col-md-4 control-label">Lương gộp</label>
+              <label class="col-md-4 control-label">Ngoại tuệ</label>
+              <div class="col-md-8 input-group">
+                  <span class="input-group-addon">USD</span>
+                  <input class="form-control currency" id="grossForeignSalary" name="foreign_salary" type="text" value="<%= foreign_salary %>" maxlength="10"/>
+                  <a href="javascript:void(0)" id="grossForeignSalaryPlay" class="input-group-addon"><span class="glyphicon glyphicon-play"></span></a>
+                  <span class="input-group-addon" data-container="body" data-toggle="popover"
+                    data-placement="left" data-content="Nhập vào số tiền tính bằng ngoại tuệ. Giá trị này sẽ được quy đổi thành tiền Vietnam đồng.">?</span>
+              </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">Lương gộp <span class="required">*</span></label>
             <div class="col-md-8 input-group">
               <span class="input-group-addon">VND</span>
               <input class="form-control currency" id="grossSalary" name="gross_salary" type="text" value="<%= gross_salary %>" maxlength="14"/>
-              <span class="input-group-addon" data-container="body" data-toggle="popover" 
+              <span class="input-group-addon" data-container="body" data-toggle="popover"
                 data-placement="left" data-content="Nhập vào lương gộp. Đây là mức lương ghi trong hợp đồng lao động. Mức lương này dùng để tính bảo hiểm y tế(và bảo hiểm xã hội, bảo hiểm thất nghiệp)">?</span>
             </div>
           </div>
@@ -120,7 +130,7 @@
           <span>Bảo hiểm Xã hội</span> (<span id="grossSocialInsuranceRateCompany"></span>)
           <span class="badge" id="grossSocialInsuranceCompany">0</span>
         </div>
-        <div class="list-group-item"> 
+        <div class="list-group-item">
           <span>Bảo hiểm Y tế</span> (<span id="grossHealthInsuranceRateCompany"></span>)
           <span class="badge" id="grossHealthInsuranceCompany">0</span>
         </div>

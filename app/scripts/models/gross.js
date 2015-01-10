@@ -11,6 +11,7 @@ pit.Models = pit.Models || {};
             this.options = _.extend({}, this.defaults, this.options);
         },
         defaults: {
+            'foreign_salary' : 0,
             'gross_salary' : 0,
             'taxable_salary' : 0,
             'bonus' : 0,
