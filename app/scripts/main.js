@@ -2,6 +2,7 @@
 
 var dataConst = [];
 var demoPits = [];
+
 demoPits.push({
 	title: 'Jan',
 	gross: 0,
@@ -135,6 +136,7 @@ var supportPlatform = [
 ];
 var AppRouter = null;
 window.pit = {
+    CurrentUSDRate: '',
     Models: {},
     Collections: {},
     Views: {},
@@ -303,8 +305,37 @@ window.pit = {
             obj.text(toFormat);
         }
     },
-    exchangeRate: function(from, to, inputVal){
+    exchangeRate: function(currency_from, currency_to, currency_input){
         var defer = $.Deferred();
+        if(window.pit.CurrentUSDRate == 0){
+            var httpGet = function(theUrl){
+                var xmlHttp = null;
+                xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "GET", theUrl, false );
+                xmlHttp.send( null );
+                return xmlHttp.responseText;
+            }
+            var yql_base_url = "https://query.yahooapis.com/v1/public/yql";
+            var yql_query = 'select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20("'+currency_from+currency_to+'")';
+            var yql_query_url = yql_base_url + "?q=" + yql_query + "&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+            var http_response = httpGet(yql_query_url);
+            var http_response_json = JSON.parse(http_response);
+            window.pit.CurrentUSDRate = http_response_json.query.results.rate.Rate;
+        }
+        setTimeout(function(){
+            //console.log(http_response_json.query.results.rate.Rate);
+            defer.resolve(parseFloat(window.pit.CurrentUSDRate) * currency_input);
+        }, 1000);
+        /*var apiExchangeKey = "080767f274fc88ed323295eeeeaa5036a93bfce4";
+        var url = "http://currency-api.appspot.com/api/%s/%s.json?key=%s";
+        $.ajax({
+            dataType: "jsonp",
+            type: "GET",
+            url: _.str.sprintf(url, from, to, apiExchangeKey),
+            async : false
+        }).done(function(responseData){
+            defer.resolve(responseData.rate);
+        });
         $.ajax({
             dataType: "jsonp",
             type: "GET",
@@ -313,7 +344,7 @@ window.pit = {
             async : false
         }).done(function(responseData){
             defer.resolve(responseData.v);
-        });
+        });*/
         return defer.promise();
     },
     // Scroll to top
@@ -476,8 +507,7 @@ window.pit = {
 })(jQuery);
 
 (function (a) {
-    a.fn.serializeObject = function()
-    {
+    a.fn.serializeObject = function(){
         var o = {};
         var a = this.serializeArray();
         $.each(a, function() {
